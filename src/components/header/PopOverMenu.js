@@ -31,8 +31,10 @@ const PopOverMenu = ({ label, faIconClass, dropDownItems, position }) => {
   };
 
   const DropDownItems = () => {
-    return dropDownItems.map(({ link, label, faClass }) => {
-      return <DropDownItem link={link} label={label} faClass={faClass} />;
+    return dropDownItems.map(({ link, label, faClass }, i) => {
+      return (
+        <DropDownItem key={i} link={link} label={label} faClass={faClass} />
+      );
     });
   };
 

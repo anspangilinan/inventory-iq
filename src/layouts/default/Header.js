@@ -13,7 +13,7 @@ const Header = (props) => {
     { link: "/settings", label: "Settings", faClass: "fa-cog" },
   ];
   const userPanelDropDownItems = [
-    { link: "/edit-profile", label: "Profile", faClass: "fa-pen-to-square" },
+    { link: "/profile", label: "Profile", faClass: "fa-pen-to-square" },
     { link: "/logout", label: "Logout", faClass: "fa-left-from-line" },
   ];
   return (

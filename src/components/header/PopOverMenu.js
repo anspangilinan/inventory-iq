@@ -7,10 +7,10 @@ const DropDownItem = ({ link, label, faClass }) => {
     <Link
       href={link}
       className={
-        "text-lg py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-500 hover:text-orange-500"
+        "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-500 hover:text-orange-500"
       }
     >
-      <i className={`fa ${faClass}`}></i> {label}
+      <i className={`fa ${faClass} align-left`}></i> {label}
     </Link>
   );
 };
@@ -41,7 +41,7 @@ const PopOverMenu = ({ label, faIconClass, dropDownItems, position }) => {
   return (
     <div>
       <a
-        className="hover:text-orange-500 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center uppercase font-bold"
+        className="hover:text-orange-500 text-white px-3 py-4 lg:py-2 flex items-center uppercase font-bold"
         href="#pablo"
         ref={btnDropdownRef}
         onClick={(e) => {
@@ -65,7 +65,7 @@ const PopOverMenu = ({ label, faIconClass, dropDownItems, position }) => {
       >
         <span
           className={
-            "text-lg pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400"
+            "text-sm pt-2 pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-600"
           }
         >
           {label}

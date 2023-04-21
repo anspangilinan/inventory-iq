@@ -1,5 +1,42 @@
-import '@/styles/globals.css'
+import { Fragment } from "react";
+import App from "next/app";
+import Head from "next/head";
 
-export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "@/styles/globals.css";
+import DefaultLayout from "@/layouts/default";
+
+export default class MyApp extends App {
+  static async getInitialProps({ Component, router, ctx }) {
+    let pageProps = {};
+
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+
+    return { pageProps };
+  }
+  render() {
+    const { Component, pageProps } = this.props;
+
+    const Layout =
+      Component.layout ||
+      (({ children }) => <DefaultLayout>{children}</DefaultLayout>);
+
+    return (
+      <Fragment>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+          />
+          <title>Inventory IQ</title>
+          <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+        </Head>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Fragment>
+    );
+  }
 }

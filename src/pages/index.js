@@ -5,7 +5,7 @@ const Index = () => {
   return (
     <>
       <section className="relative pt-16 items-center flex h-screen max-h-860-px ">
-        Hello
+        Homepage
       </section>
     </>
   );

@@ -1,0 +1,29 @@
+
+version: '3.8'
+services:
+  mongo:
+    image: mongo
+    restart: always
+    command: mongod --port 27017
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=rootuser
+      - MONGO_INITDB_ROOT_PASSWORD=p4$$w0rd
+
+  web:
+    build:
+      context: ./
+      target: runner
+    depends_on:
+      - mongo
+    volumes:
+      - .:/app
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      MONGODB_URL: mongodb://rootuser:p4$$w0rd@mongo:27017/
+      MONGODB_DBNAME: inventory-iq-alpha
+      MONGODB_USE_SSL: false

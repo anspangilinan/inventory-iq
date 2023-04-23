@@ -13,17 +13,19 @@ services:
 
   web:
     build:
-      context: ./
-      target: runner
+      context: .
+      target: deps
     depends_on:
       - mongo
-    volumes:
-      - .:/app
     command: npm run dev
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       NODE_ENV: development
       MONGODB_URL: mongodb://rootuser:p4$$w0rd@mongo:27017/
       MONGODB_DBNAME: inventory-iq-alpha
       MONGODB_USE_SSL: false
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next

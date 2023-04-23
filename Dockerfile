@@ -1,22 +1,22 @@
-FROM node:18-alpine AS dependencies
-WORKDIR /web
-COPY --chown=node:node package*.json .
+FROM node:18-alpine AS deps
+WORKDIR /app
+COPY package*.json .
+ARG NODE_ENV
+ENV NODE_ENV $NODE_ENV
 RUN npm install
 
 FROM node:18-alpine AS builder
-WORKDIR /web
-COPY . .
-COPY --from=dependencies /web/node_modules ./node_modules
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY src ./src
+COPY public ./public
+COPY package.json next.config.js jsconfig.json ./
 RUN npm run build
 
-FROM node:18-alpine AS runner
-WORKDIR /web
-
-COPY --from=builder /web/next.config.js ./
-COPY --from=builder /web/public ./public
-COPY --from=builder /web/.next ./.next
-COPY --from=builder /web/node_modules ./node_modules
-COPY --from=builder /web/package.json ./package.json
-
-EXPOSE ${PORT}
-CMD ["npm", "run", "dev"]
+FROM node:18-alpine
+WORKDIR /app
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./
+CMD ["npm", "run", "start"]

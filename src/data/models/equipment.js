@@ -6,6 +6,10 @@ const Equipment = new mongoose.Schema({
     required: [true, "Please provide a name for this equipment."],
     maxlength: [60, "Name cannot be more than 60 characters"],
   },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "EquipmentCategory",
+  },
 });
 
 export default mongoose.models.Equipment ||

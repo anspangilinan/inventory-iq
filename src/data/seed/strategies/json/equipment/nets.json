@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Soccer net",
+    "description": "A net used in the game of soccer to catch the ball when it is kicked into the goal."
+  },
+  {
+    "name": "Volleyball net",
+    "description": "A net used in the game of volleyball to separate the two teams and catch the ball when it is hit over the net."
+  },
+  {
+    "name": "Tennis net",
+    "description": "A net used in the game of tennis to separate the two players and catch the ball when it is hit over the net."
+  },
+  {
+    "name": "Badminton net",
+    "description": "A net used in the game of badminton to separate the two players and catch the shuttlecock when it is hit over the net."
+  }
+]

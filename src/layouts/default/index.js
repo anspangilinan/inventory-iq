@@ -1,3 +1,4 @@
+import React from "react";
 import Breadcrumb from "@/components/breadcrumbs";
 import Footer from "./Footer";
 import Header from "./Header";

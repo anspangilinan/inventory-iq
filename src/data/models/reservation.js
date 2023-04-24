@@ -6,6 +6,10 @@ const Reservation = new mongoose.Schema({
     required: [true, "Please provide a name for this reservation."],
     maxlength: [60, "Name cannot be more than 60 characters"],
   },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+  },
   equipment: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Equipment",

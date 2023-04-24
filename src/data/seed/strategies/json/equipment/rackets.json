@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Tennis racket",
+    "description": "A lightweight racket used in the game of tennis to hit the ball over the net."
+  },
+  {
+    "name": "Badminton racket",
+    "description": "A lightweight racket used in the game of badminton to hit the shuttlecock over the net."
+  },
+  {
+    "name": "Squash racket",
+    "description": "A small, lightweight racket used in the game of squash to hit the ball against the wall."
+  },
+  {
+    "name": "Racquetball racket",
+    "description": "A small, lightweight racket used in the game of racquetball to hit the ball against the wall."
+  }
+]

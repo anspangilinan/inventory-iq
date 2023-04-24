@@ -1,21 +1,33 @@
 {
   "name": "inventory-iq",
+  "author": "anspangilinan@gmail.com",
+  "contributors": [
+    {
+      "name": "Andrew Niccolo Pangilinan",
+      "email": "anspangilinan@gmail.com"
+    }
+  ],
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "node -r @babel/register ./src/data/seed/index.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@popperjs/core": "^2.11.7",
     "autoprefixer": "10.4.14",
+    "mongoose": "^7.0.4",
     "next": "13.3.0",
     "postcss": "8.4.22",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwindcss": "3.3.1"
+  },
+  "devDependencies": {
+    "@babel/register": "^7.21.0"
   }
 }

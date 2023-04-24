@@ -8,8 +8,20 @@ services:
     ports:
       - "27017:27017"
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=rootuser
-      - MONGO_INITDB_ROOT_PASSWORD=p4$$w0rd
+      MONGO_INITDB_ROOT_USERNAME: rootuser
+      MONGO_INITDB_ROOT_PASSWORD: p4$$w0rd
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - "1015:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: rootuser
+      ME_CONFIG_MONGODB_ADMINPASSWORD: p4$$w0rd
+      ME_CONFIG_MONGODB_URL: mongodb://rootuser:p4$$w0rd@mongo:27017
 
   web:
     build:
@@ -19,12 +31,11 @@ services:
       - mongo
     command: npm run dev
     ports:
-      - '3000:3000'
+      - "0917:3000"
     environment:
       NODE_ENV: development
-      MONGODB_URL: mongodb://rootuser:p4$$w0rd@mongo:27017/
-      MONGODB_DBNAME: inventory-iq-alpha
-      MONGODB_USE_SSL: false
+      MONGODB_URL: mongodb://rootuser:p4$$w0rd@mongo:27017
+      MONGODB_NAME: inventory-iq-alpha
     volumes:
       - .:/app
       - /app/node_modules

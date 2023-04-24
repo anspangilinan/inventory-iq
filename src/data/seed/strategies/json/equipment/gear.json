@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Helmet",
+    "description": "A protective headgear worn by athletes in contact sports such as football, hockey, and lacrosse.",
+    "categoryName": "Gear"
+  },
+  {
+    "name": "Pads",
+    "description": "Protective equipment worn by athletes in contact sports such as football, hockey, and lacrosse to prevent injury.",
+    "categoryName": "Gear"
+  },
+  {
+    "name": "Mouthguard",
+    "description": "A device worn in the mouth to protect the teeth and gums during contact sports such as football and boxing.",
+    "categoryName": "Gear"
+  },
+  {
+    "name": "Cleats",
+    "description": "Specialized footwear worn by athletes in sports such as soccer, football, and baseball to improve traction on the playing surface.",
+    "categoryName": "Gear"
+  },
+  {
+    "name": "Shin guards",
+    "description": "Protective equipment worn by athletes in sports such as soccer and field hockey to protect the shins from injury.",
+    "categoryName": "Gear"
+  }
+]

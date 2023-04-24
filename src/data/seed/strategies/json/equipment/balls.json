@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Basketball",
+    "description": "A large, inflatable ball used in the game of basketball.",
+    "categoryName": "Balls"
+  },
+  {
+    "name": "Soccer ball",
+    "description": "A ball used in the game of soccer, typically made of leather or synthetic materials.",
+    "categoryName": "Balls"
+  },
+  {
+    "name": "Volleyball",
+    "description": "A ball used in the game of volleyball, typically made of synthetic leather or rubber.",
+    "categoryName": "Balls"
+  },
+  {
+    "name": "Rugby ball",
+    "description": "An oval-shaped ball used in the game of rugby, typically made of leather or synthetic materials.",
+    "categoryName": "Balls"
+  },
+  {
+    "name": "Tennis ball",
+    "description": "A small, lightweight ball used in the game of tennis, typically made of rubber and covered in felt.",
+    "categoryName": "Balls"
+  },
+  {
+    "name": "Golf ball",
+    "description": "A small, hard ball used in the game of golf, typically made of plastic or rubber with a dimpled surface.",
+    "categoryName": "Balls"
+  }
+]

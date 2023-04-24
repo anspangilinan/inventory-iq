@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 import { UserSeeder } from "./strategies/user.seed";
 import { EquipmentSeeder } from "./strategies/equipment.seed";
 
-console.log({
-  MONGODB_URL: process.env.MONGODB_URL,
-  MONGODB_NAME: process.env.MONGODB_NAME,
-});
 mongoose.connect(process.env.MONGODB_URL, {
   dbName: process.env.MONGODB_NAME,
   ssl: false,

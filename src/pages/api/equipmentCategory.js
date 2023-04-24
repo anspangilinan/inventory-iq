@@ -1,4 +1,4 @@
-import dbConnect from "../../data/lib/db";
+import dbConnect from "../../data/db";
 import EquipmentCategory from "../../data/models/equipmentCategory";
 
 export default async function handler(req, res) {

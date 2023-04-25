@@ -11,7 +11,7 @@ const Header = (props) => {
       label: "Reservations",
       faClass: "fa-basket-shopping",
     },
-    { link: "/notification", label: "Notifications", faClass: "fa-bell" },
+    { link: "/notifications", label: "Notifications", faClass: "fa-bell" },
     // { link: "/help", label: "Help", faClass: "fa-question" },
     // { link: "/settings", label: "Settings", faClass: "fa-cog" },
   ];

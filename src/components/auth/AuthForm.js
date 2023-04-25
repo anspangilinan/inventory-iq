@@ -107,7 +107,7 @@ function AuthForm() {
                 {isLogin ? "Login" : "Create Account"}
               </button>
             </div>
-            <div className="text-center mt-6">
+            {/* <div className="text-center mt-6">
               <button
                 type="button"
                 onClick={switchAuthModeHandler}
@@ -115,7 +115,7 @@ function AuthForm() {
               >
                 {isLogin ? "No Account? Create One" : "Already a user? Login"}
               </button>
-            </div>
+            </div> */}
           </form>
         </>
       ) : (

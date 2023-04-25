@@ -5,7 +5,6 @@ import { useEffect } from "react";
 const Header = (props) => {
   const mainMenuDropDownItems = [
     { link: "/", label: "Home", faClass: "fa-home" },
-    { link: "/categories", label: "Equipments", faClass: "fa-volleyball" },
     { link: "/bookmarks", label: "Bookmarks", faClass: "fa-bookmark" },
     {
       link: "/reservations",
@@ -23,9 +22,6 @@ const Header = (props) => {
 
   const { data: session } = useSession();
 
-  useEffect(() => {
-    console.log({ session });
-  }, [session]);
   return (
     <>
       <nav className="bg-blueGray-600 top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg">

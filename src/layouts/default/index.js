@@ -2,6 +2,7 @@ import React from "react";
 import Breadcrumb from "@/components/breadcrumbs";
 import Footer from "./Footer";
 import Header from "./Header";
+import "react-datepicker/dist/react-datepicker.css";
 
 const DefaultLayout = ({ children }) => {
   return (

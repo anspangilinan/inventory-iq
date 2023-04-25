@@ -27,7 +27,7 @@ const categorySeeds = [
     "name": "Gear",
     "slug": "gear",
     "description": "This category includes a wide range of equipment used in various sports. Gear can include things like helmets, pads, gloves, shoes, and other protective or specialized equipment.",
-    "icon": "fa-mitten",
+    "icon": "fa-helmet-un",
     "equipments": gearJson
   },
   {

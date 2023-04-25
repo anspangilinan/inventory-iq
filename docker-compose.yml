@@ -31,11 +31,13 @@ services:
       - mongo
     command: npm run dev
     ports:
-      - "0917:3000"
+      - "3000:3000"
     environment:
       NODE_ENV: development
+      PORT: 3000
       MONGODB_URL: mongodb://rootuser:p4$$w0rd@mongo:27017
       MONGODB_NAME: inventory-iq-alpha
+      NEXTAUTH_SECRET: N/9OuUGle2V7p6Jtx+qyPvw8K8b5oRKy0WhgKAocRn4=
     volumes:
       - .:/app
       - /app/node_modules

@@ -1,29 +1,18 @@
-import { Fragment } from "react";
-import App from "next/app";
-import Head from "next/head";
-
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "@/styles/globals.css";
 import DefaultLayout from "@/layouts/default";
+import "@/styles/globals.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import "react-datepicker/dist/react-datepicker.css";
+import { SessionProvider } from "next-auth/react";
+import Head from "next/head";
+import { Fragment } from "react";
 
-export default class MyApp extends App {
-  static async getInitialProps({ Component, router, ctx }) {
-    let pageProps = {};
+function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
+  const Layout =
+    Component.layout ||
+    (({ children }) => <DefaultLayout>{children}</DefaultLayout>);
 
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
-
-    return { pageProps };
-  }
-  render() {
-    const { Component, pageProps } = this.props;
-
-    const Layout =
-      Component.layout ||
-      (({ children }) => <DefaultLayout>{children}</DefaultLayout>);
-
-    return (
+  return (
+    <SessionProvider session={session}>
       <Fragment>
         <Head>
           <meta
@@ -36,6 +25,8 @@ export default class MyApp extends App {
           <Component {...pageProps} />
         </Layout>
       </Fragment>
-    );
-  }
+    </SessionProvider>
+  );
 }
+
+export default MyApp;

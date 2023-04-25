@@ -1,4 +1,6 @@
 import PopOverMenu from "@/components/header/PopOverMenu";
+import { useSession, signOut } from "next-auth/react";
+import { useEffect } from "react";
 
 const Header = (props) => {
   const mainMenuDropDownItems = [
@@ -16,8 +18,14 @@ const Header = (props) => {
   ];
   const userPanelDropDownItems = [
     { link: "/profile", label: "Profile", faClass: "fa-pen-to-square" },
-    { link: "/logout", label: "Logout", faClass: "fa-left-from-line" },
+    { onClickHandler: signOut, label: "Logout", faClass: "fa-left-from-line" },
   ];
+
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    console.log({ session });
+  }, [session]);
   return (
     <>
       <nav className="bg-blueGray-600 top-0 fixed z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg">
@@ -30,7 +38,11 @@ const Header = (props) => {
               position="left"
             />
             <PopOverMenu
-              label="User Panel"
+              label={
+                session?.user
+                  ? `${session.user.firstName} ${session.user.lastName}`
+                  : "User Panel"
+              }
               faIconClass={"fa-user"}
               dropDownItems={userPanelDropDownItems}
               position="right"

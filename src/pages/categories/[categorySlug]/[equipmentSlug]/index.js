@@ -10,7 +10,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-const EquipmentDetails = ({ categorySlug, equipmentSlug }) => {
+const EquipmentDetails = ({ equipmentSlug }) => {
   const [equipment, setEquipment] = useState([]);
   const [quantity, setQuantity] = useState(0);
   const [dateRange, setDateRange] = useState([null, null]);
@@ -31,39 +31,30 @@ const EquipmentDetails = ({ categorySlug, equipmentSlug }) => {
     <section className="relative py-20">
       <div className="container mx-auto px-4">
         <div className="items-center flex flex-wrap">
-          <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">
-            <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-blueGray-700">
-              <img
-                src="/images/sports_equipment.jpg"
-                className="w-full align-middle rounded-t-lg"
-              />
-              <blockquote className="relative p-8 mb-4">
-                <h4 className="text-xl font-bold text-white">
-                  {equipment?.category?.name}
-                </h4>
-                <p className="text-md font-light mt-2 text-white">
-                  {equipment?.category?.description}
-                </p>
-              </blockquote>
-            </div>
-          </div>
-          <div className="w-full md:w-5/12 ml-auto mr-auto px-4">
-            <div className="md:pr-12">
-              <h3 className="text-3xl font-semibold">{equipment?.name}</h3>
+          <div className="w-full md:w-5/12 ml-auto mr-auto p-4 shadow-lg rounded-lg bg-white">
+            <div className="">
+              <div className="flex items-center justify-between pt-4">
+                <h3 className="text-3xl font-semibold text-blueGray-600">
+                  {equipment?.name}
+                </h3>
+                <span className="text-3xl text-gray-600 hover:text-orange-400 hover:cursor-pointer">
+                  <i className="fa fa-bookmark"></i>
+                </span>
+              </div>
               <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
                 {equipment?.description}
               </p>
-              <ul className="list-none mt-6">
+              <ul className="list-none mt-6 bg-blueGrey-200 rounded-lg">
                 <li className="py-2">
                   <div className="flex items-center">
-                    <div className="bg-white rounded-full">
+                    <div className="bg-gray-300 rounded-full">
                       <span
                         onClick={() => setQuantity(quantity ? quantity - 1 : 0)}
                         className="text-white bg-red-400 hover:bg-red-600 hover:cursor-pointer rounded-full text-sm font-semibold inline-block py-1 px-2 uppercase"
                       >
                         <i className="fas fa-minus"></i>
                       </span>
-                      <span className="text-sm font-semibold inline-block py-1 px-6 uppercase  bg-white">
+                      <span className="text-sm font-semibold inline-block py-1 px-6 uppercase  bg-gray-300">
                         {quantity}
                       </span>
                       <span
@@ -85,7 +76,7 @@ const EquipmentDetails = ({ categorySlug, equipmentSlug }) => {
                       endDate={endDate}
                       onChange={dateChange}
                       withPortal
-                      className="border-0 px-6 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      className="border-0 px-6 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-300 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>
                 </li>
@@ -93,18 +84,34 @@ const EquipmentDetails = ({ categorySlug, equipmentSlug }) => {
                   <div className="flex items-center">
                     <div>
                       <button
-                        className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        className="bg-blueGray-600 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
                         onClick={() => {
                           console.log({ startDate, endDate, quantity });
                         }}
                       >
-                        Submit Reservation
+                        Reserve
                       </button>
                     </div>
                   </div>
                 </li>
               </ul>
+            </div>
+          </div>
+          <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">
+            <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-lg bg-blueGray-700">
+              <img
+                src="/images/sports_equipment.jpg"
+                className="w-full align-middle rounded-t-lg"
+              />
+              <blockquote className="relative p-8 mb-4">
+                <h4 className="text-xl font-bold text-white">
+                  Category: {equipment?.category?.name}
+                </h4>
+                <p className="text-md font-light mt-2 text-white">
+                  {equipment?.category?.description}
+                </p>
+              </blockquote>
             </div>
           </div>
         </div>

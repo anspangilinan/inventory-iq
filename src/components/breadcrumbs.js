@@ -8,7 +8,7 @@ const BreadcrumbItem = ({ children, href, ...props }) => {
   return (
     <li {...props}>
       <Link
-        className="text-lg font-semibold border-b-2 border-y-blueGray-200 text-blueGray-400"
+        className="text-lg font-semibold border-b-2 border-y-blueGray-200 text-blueGray-600"
         href={href}
         passHref
       >
@@ -25,7 +25,7 @@ const Breadcrumb = ({ children }) => {
       return (
         <Fragment key={index}>
           {child}
-          <i className="text-sm fa fa-chevron-right"></i>
+          <i className="text-sm fa fa-chevron-right text-blueGray-400"></i>
         </Fragment>
       );
     }
@@ -53,7 +53,7 @@ const BreadcrumbWrapper = () => {
       const href = "/" + pathArray.slice(0, index + 1).join("/");
       return {
         href,
-        label: path.charAt(0).toUpperCase() + path.slice(1),
+        label: path.replace("-", " ").toUpperCase(),
       };
     });
 
@@ -62,7 +62,7 @@ const BreadcrumbWrapper = () => {
 
   return (
     <Breadcrumb>
-      <BreadcrumbItem href="/">Home</BreadcrumbItem>
+      <BreadcrumbItem href="/">HOME</BreadcrumbItem>
       {breadcrumbs &&
         breadcrumbs.map((breadcrumb) => (
           <BreadcrumbItem key={breadcrumb.href} href={breadcrumb.href}>

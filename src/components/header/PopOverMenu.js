@@ -2,8 +2,8 @@ import { useState, createRef } from "react";
 import Link from "next/link";
 import { createPopper } from "@popperjs/core";
 
-const DropDownItem = ({ link, label, faClass }) => {
-  return (
+const DropDownItem = ({ link, onClickHandler, label, faClass }) => {
+  return !!link ? (
     <Link
       href={link}
       className={
@@ -12,6 +12,15 @@ const DropDownItem = ({ link, label, faClass }) => {
     >
       <i className={`fa ${faClass} align-left`}></i> {label}
     </Link>
+  ) : (
+    <button
+      onClick={() => onClickHandler()}
+      className={
+        "text-right text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-500 hover:text-orange-500"
+      }
+    >
+      <i className={`fa ${faClass} align-left`}></i> {label}
+    </button>
   );
 };
 
@@ -31,9 +40,15 @@ const PopOverMenu = ({ label, faIconClass, dropDownItems, position }) => {
   };
 
   const DropDownItems = () => {
-    return dropDownItems.map(({ link, label, faClass }, i) => {
+    return dropDownItems.map(({ link, onClickHandler, label, faClass }, i) => {
       return (
-        <DropDownItem key={i} link={link} label={label} faClass={faClass} />
+        <DropDownItem
+          key={i}
+          link={link}
+          onClickHandler={onClickHandler}
+          label={label}
+          faClass={faClass}
+        />
       );
     });
   };

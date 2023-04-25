@@ -15,4 +15,4 @@ docker-compose run web npm run seed
 docker-compose up
 ```
 
-The web application should be accessible on the following url: http://localhost:917
+The web application should be accessible on the following url: http://localhost:3000

@@ -38,7 +38,7 @@ const Reservations = () => {
           reservation.quantity,
           new Date(reservation.dateStart).toDateString(),
           new Date(reservation.dateEnd).toDateString(),
-          <Link href={`/reservation/${reservation._id}`}>View Details</Link>,
+          <Link href={`/reservations/${reservation._id}`}>View Details</Link>,
         ];
       });
       setReservations(reservations);

@@ -5,10 +5,10 @@ import Header from "./Header";
 
 const DefaultLayout = ({ children }) => {
   return (
-    <div className="flex flex-col h-screen justify-between">
+    <div className="bg-blueGray-200 flex flex-col h-screen justify-between">
       <Header fixed />
       <div className="w-full flex flex-wrap items-center justify-between">
-        <div className="container px-4 mx-auto">
+        <div className="container px-8 mx-auto">
           <section className="header relative pt-16 items-center">
             <Breadcrumb />
           </section>

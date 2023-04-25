@@ -7,7 +7,11 @@ import Link from "next/link";
 const BreadcrumbItem = ({ children, href, ...props }) => {
   return (
     <li {...props}>
-      <Link className="text-lg" href={href} passHref>
+      <Link
+        className="text-lg font-semibold border-b-2 border-y-blueGray-200 text-blueGray-400"
+        href={href}
+        passHref
+      >
         {children}
       </Link>
     </li>
@@ -29,7 +33,7 @@ const Breadcrumb = ({ children }) => {
   });
 
   return (
-    <nav className="mx-8 mt-8">
+    <nav className="mx-8 mt-8 bg-white border py-3 px-5 rounded-lg mb-4">
       <ol className="flex items-center space-x-4">{childrenWtihSeperator}</ol>
     </nav>
   );

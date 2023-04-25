@@ -2,6 +2,8 @@ import PopOverMenu from "@/components/header/PopOverMenu";
 
 const Header = (props) => {
   const mainMenuDropDownItems = [
+    { link: "/", label: "Home", faClass: "fa-home" },
+    { link: "/categories", label: "Equipments", faClass: "fa-volleyball" },
     { link: "/bookmarks", label: "Bookmarks", faClass: "fa-bookmark" },
     {
       link: "/reservations",

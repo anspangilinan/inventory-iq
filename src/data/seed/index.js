@@ -4,8 +4,8 @@ import { EquipmentSeeder } from "./strategies/equipment.seed";
 
 mongoose.connect(process.env.MONGODB_URL, {
   dbName: process.env.MONGODB_NAME,
-  ssl: false,
-  sslValidate: false,
+  ssl: process.env.MONGODB_ENABLE_SSL == "true" ? true : false,
+  sslValidate: process.env.MONGODB_ENABLE_SSL == "true" ? true : false,
 });
 
 const db = mongoose.connection;

@@ -33,25 +33,36 @@ const THead = ({ columns }) => {
   );
 };
 
-const TBody = ({ tableData }) => {
+const TBody = ({ tableData, colspan }) => {
   return (
     <tbody>
-      {tableData?.map((row, i) => {
-        return (
-          <tr key={i}>
-            {row.map((column, i) => {
-              return (
-                <td
-                  key={i}
-                  className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
-                >
-                  {column}
-                </td>
-              );
-            })}
-          </tr>
-        );
-      })}
+      {tableData.length > 0 ? (
+        tableData?.map((row, i) => {
+          return (
+            <tr key={i}>
+              {row.map((column, i) => {
+                return (
+                  <td
+                    key={i}
+                    className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                  >
+                    {column}
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })
+      ) : (
+        <tr>
+          <td
+            colSpan={colspan}
+            className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-center italic whitespace-nowrap p-4"
+          >
+            No entries found
+          </td>
+        </tr>
+      )}
     </tbody>
   );
 };
@@ -69,7 +80,7 @@ const CardTable = ({ label, columns, tableData }) => {
           {/* Projects table */}
           <table className="items-center w-full bg-transparent border-collapse">
             <THead columns={columns} />
-            <TBody tableData={tableData} />
+            <TBody tableData={tableData} colspan={columns.length} />
           </table>
         </div>
       </div>

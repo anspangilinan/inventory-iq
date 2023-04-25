@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 
 const Reservation = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Please provide a name for this reservation."],
-    maxlength: [60, "Name cannot be more than 60 characters"],
-  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
@@ -13,6 +8,15 @@ const Reservation = new mongoose.Schema({
   equipment: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Equipment",
+  },
+  quantity: {
+    type: Number,
+  },
+  dateStart: {
+    type: Date,
+  },
+  dateEnd: {
+    type: Date,
   },
   dateCreated: {
     type: Date,

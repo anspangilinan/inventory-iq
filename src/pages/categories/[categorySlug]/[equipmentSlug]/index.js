@@ -1,7 +1,9 @@
 import jsonFetcher from "@/lib/jsonFetcher";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import useSWR from "swr";
+import { ToastContainer, toast } from "react-toastify";
 
 export async function getServerSideProps(context) {
   const { categorySlug, equipmentSlug } = context.query;
@@ -10,11 +12,30 @@ export async function getServerSideProps(context) {
   };
 }
 
+async function createReservation({ userId, body }) {
+  const response = await fetch(`/api/user/${userId}/reservations`, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Something went wrong!");
+  }
+
+  return data;
+}
+
 const EquipmentDetails = ({ equipmentSlug }) => {
   const [equipment, setEquipment] = useState([]);
   const [quantity, setQuantity] = useState(0);
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
+  const { data: session } = useSession();
 
   const { data } = useSWR(`/api/equipment/${equipmentSlug}`, jsonFetcher);
 
@@ -23,12 +44,49 @@ const EquipmentDetails = ({ equipmentSlug }) => {
       setEquipment(data.data);
     }
   }, [data]);
+
   const dateChange = (update) => {
     setDateRange(update);
   };
 
+  const reserveHandler = async () => {
+    if (quantity == 0) {
+      toast.error("Set a quantity");
+    } else if (startDate === null) {
+      toast.error("Set a Start Date");
+    } else if (endDate === null) {
+      toast.error("Set an End Date");
+    } else {
+      await createReservation({
+        userId: session.user._id,
+        body: {
+          equipmentId: equipment._id,
+          quantity,
+          startDate,
+          endDate,
+        },
+      });
+
+      toast.success("Equipment reserved!");
+      setDateRange([null, null]);
+      setQuantity(0);
+    }
+  };
+
   return (
     <section className="relative py-20">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="container mx-auto px-4">
         <div className="items-center flex flex-wrap">
           <div className="w-full md:w-5/12 ml-auto mr-auto p-4 shadow-lg rounded-lg bg-white">
@@ -86,9 +144,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
                       <button
                         className="bg-blueGray-600 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
-                        onClick={() => {
-                          console.log({ startDate, endDate, quantity });
-                        }}
+                        onClick={reserveHandler}
                       >
                         Reserve
                       </button>

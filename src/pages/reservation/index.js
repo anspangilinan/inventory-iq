@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { CardTable } from "@/components/table";
+import Link from "next/link";
 
-async function fetchNotifications(userId) {
-  const response = await fetch(`/api/user/${userId}/notifications`, {
+async function fetchReservations(userId) {
+  const response = await fetch(`/api/user/${userId}/reservations`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -19,15 +20,15 @@ async function fetchNotifications(userId) {
   return data;
 }
 
-const Notifications = () => {
+const Reservations = () => {
   const { data: session } = useSession();
-  const [notifications, setNotifications] = useState([]);
-  const columns = ["Date", "Message"];
+  const [reservations, setReservations] = useState([]);
+  const columns = ["Equipment", "Quantity", "Start Date", "End Date", ""];
 
   useEffect(() => {
     async function fetchFromApi(userId) {
-      let response = await fetchNotifications(userId);
-      const notifications = response.data.map((reservation) => {
+      let response = await fetchReservations(userId);
+      const reservations = response.data.map((reservation) => {
         return [
           <Link
             href={`/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`}
@@ -40,7 +41,7 @@ const Notifications = () => {
           <Link href={`/reservation/${reservation._id}`}>View Details</Link>,
         ];
       });
-      setNotifications(notifications);
+      setReservations(reservations);
     }
 
     if (session?.user) {
@@ -53,12 +54,12 @@ const Notifications = () => {
       <section className="relative pt-16 items-center">
         <CardTable
           columns={columns}
-          tableData={notifications}
-          label={"Notifications list"}
+          tableData={reservations}
+          label={"Reservations list"}
         />
       </section>
     </>
   );
 };
 
-export default Notifications;
+export default Reservations;

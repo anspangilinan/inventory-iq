@@ -36,7 +36,11 @@ const EquipmentsIndex = ({ categorySlug }) => {
   return (
     <>
       <section className="relative pt-16 items-center">
-        <CardTable columns={columns} tableData={equipments} />
+        <CardTable
+          columns={columns}
+          tableData={equipments}
+          label={`Equipments list`}
+        />
       </section>
     </>
   );

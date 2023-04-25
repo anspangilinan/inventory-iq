@@ -1,11 +1,61 @@
-/* eslint-disable react/jsx-no-target-blank */
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { CardTable } from "@/components/table";
+
+async function fetchBookmarks(userId) {
+  const response = await fetch(`/api/user/${userId}/bookmarks`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Something went wrong!");
+  }
+
+  return data;
+}
 
 const Bookmarks = () => {
+  const { data: session } = useSession();
+  const [bookmarks, setBookmarks] = useState([]);
+  const columns = ["Bookmark Type", "Link"];
+
+  useEffect(() => {
+    async function fetchFromApi(userId) {
+      let response = await fetchBookmarks(userId);
+      const bookmarks = response.data.map((reservation) => {
+        return [
+          <Link
+            href={`/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`}
+          >
+            {reservation.equipment.name}
+          </Link>,
+          reservation.quantity,
+          new Date(reservation.dateStart).toDateString(),
+          new Date(reservation.dateEnd).toDateString(),
+          <Link href={`/reservation/${reservation._id}`}>View Details</Link>,
+        ];
+      });
+      setBookmarks(bookmarks);
+    }
+
+    if (session?.user) {
+      fetchFromApi(session?.user._id);
+    }
+  }, [session?.user]);
+
   return (
     <>
-      <section className="relative pt-16 items-center flex h-screen max-h-860-px ">
-        Bookmarks
+      <section className="relative pt-16 items-center">
+        <CardTable
+          columns={columns}
+          tableData={bookmarks}
+          label={"Bookmarks list"}
+        />
       </section>
     </>
   );

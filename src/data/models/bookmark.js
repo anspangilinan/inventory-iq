@@ -14,6 +14,10 @@ const Bookmark = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Equipment",
   },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
+  },
   dateCreated: {
     type: Date,
   },

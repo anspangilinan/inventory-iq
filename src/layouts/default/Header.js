@@ -12,8 +12,8 @@ const Header = (props) => {
       faClass: "fa-basket-shopping",
     },
     { link: "/notification", label: "Notifications", faClass: "fa-bell" },
-    { link: "/help", label: "Help", faClass: "fa-question" },
-    { link: "/settings", label: "Settings", faClass: "fa-cog" },
+    // { link: "/help", label: "Help", faClass: "fa-question" },
+    // { link: "/settings", label: "Settings", faClass: "fa-cog" },
   ];
   const userPanelDropDownItems = [
     { link: "/profile", label: "Profile", faClass: "fa-pen-to-square" },

@@ -39,7 +39,7 @@ const TBody = ({ tableData, colspan }) => {
       {tableData.length > 0 ? (
         tableData?.map((row, i) => {
           return (
-            <tr key={i}>
+            <tr key={i} className="hover:bg-gray-100">
               {row.map((column, i) => {
                 return (
                   <td
@@ -57,7 +57,7 @@ const TBody = ({ tableData, colspan }) => {
         <tr>
           <td
             colSpan={colspan}
-            className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm text-center italic whitespace-nowrap p-4"
+            className="border-t-0 align-middle border-l-0 border-r-0 text-sm text-center italic whitespace-nowrap p-12"
           >
             No entries found
           </td>

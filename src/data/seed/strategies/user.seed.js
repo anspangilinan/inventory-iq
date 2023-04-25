@@ -3,8 +3,6 @@ const userSeeds = [
   {
     firstName: "Fyodor",
     lastName: "Karamazov",
-    grade: 11,
-    section: "Mitya",
     email: "superadmin@sample.com",
     password: "superadmin",
     role: "admin",

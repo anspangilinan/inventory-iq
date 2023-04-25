@@ -55,7 +55,7 @@ function AuthForm() {
         const result = await createUser(enteredEmail, enteredPassword);
         setRegistered(true);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   }

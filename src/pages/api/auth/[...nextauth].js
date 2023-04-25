@@ -25,10 +25,11 @@ export default NextAuth({
 
         // Try to find the user and also return the password field
         const user = await User.findOne({ email: credentials.email }).select({
+          email: 1,
           password: 1,
+          role: 1,
           firstName: 1,
           lastName: 1,
-          email: 1,
           grade: 1,
           section: 1,
         });
@@ -57,6 +58,7 @@ export default NextAuth({
         token.user = {
           _id: user._id,
           email: user.email,
+          role: user.role,
           grade: user.grade,
           section: user.section,
           firstName: user.firstName,

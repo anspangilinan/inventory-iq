@@ -17,7 +17,6 @@ const EquipmentDetails = ({ reservationId }) => {
   useEffect(() => {
     if (data) {
       setReservation(data.data);
-      console.log(data.data);
     }
   }, [data]);
 

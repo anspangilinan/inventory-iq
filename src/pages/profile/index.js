@@ -83,13 +83,17 @@ const Profile = () => {
                 {session?.user?.firstName} {session?.user?.lastName}
               </h3>
               <div className="mb-2 text-blueGray-600 mt-10">
-                <i className="fas fa-envelope mr-2 text-lg text-blueGray-400"></i>
                 {session?.user?.email}
               </div>
               <div className="mb-2 text-blueGray-600">
-                <i className="fas fa-chalkboard mr-2 text-lg text-blueGray-400"></i>{" "}
-                Grade {session?.user?.grade} - {session?.user?.section}
+                Role: {session?.user?.role}
               </div>
+              {session?.user.grade && (
+                <div className="mb-2 text-blueGray-600">
+                  <i className="fas fa-chalkboard mr-2 text-lg text-blueGray-400"></i>{" "}
+                  Grade {session?.user?.grade} - {session?.user?.section}
+                </div>
+              )}
               <div className="mt-8 mb-2 text-blueGray-600">
                 <a
                   href="#"

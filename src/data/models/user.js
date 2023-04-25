@@ -13,6 +13,9 @@ const User = new mongoose.Schema({
     required: [true, "Please provide a first name for this User."],
     maxlength: [60, "Last name cannot be more than 60 characters"],
   },
+  role: {
+    type: String,
+  },
   email: {
     type: String,
     match: [
@@ -31,11 +34,9 @@ const User = new mongoose.Schema({
   },
   grade: {
     type: Number,
-    required: [true, "Grade is required."],
   },
   section: {
     type: String,
-    required: [true, "Please provide section for this User."],
     maxlength: [60, "Section cannot be more than 60 characters"],
   },
 });

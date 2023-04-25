@@ -30,6 +30,24 @@ async function createReservation({ userId, body }) {
   return data;
 }
 
+async function upsertBookmark({ userId, body }) {
+  const response = await fetch(`/api/user/${userId}/bookmarks`, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Something went wrong!");
+  }
+
+  return data;
+}
+
 const EquipmentDetails = ({ equipmentSlug }) => {
   const [equipment, setEquipment] = useState([]);
   const [quantity, setQuantity] = useState(0);
@@ -71,6 +89,10 @@ const EquipmentDetails = ({ equipmentSlug }) => {
       setDateRange([null, null]);
       setQuantity(0);
     }
+  };
+
+  const bookmarkHandler = async () => {
+    // upsertBookmark;
   };
 
   return (

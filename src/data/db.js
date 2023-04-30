@@ -29,8 +29,8 @@ async function dbConnect() {
     cached.promise = mongoose
       .connect(process.env.MONGODB_URL, {
         dbName: process.env.MONGODB_NAME,
-        ssl: false,
-        sslValidate: false,
+        ssl: process.env.MONGODB_ENABLE_SSL == "true" ? true : false,
+        sslValidate: process.env.MONGODB_ENABLE_SSL == "true" ? true : false,
       })
       .then((mongoose) => {
         return mongoose;

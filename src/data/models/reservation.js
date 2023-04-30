@@ -22,6 +22,9 @@ const Reservation = new mongoose.Schema({
     type: Date,
   },
   comments: [{ body: "string", by: mongoose.Schema.Types.ObjectId }],
+  status: {
+    type: String,
+  },
 });
 
 export default mongoose.models.Reservation ||

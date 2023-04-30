@@ -23,7 +23,10 @@ const EquipmentsIndex = ({ categorySlug }) => {
     if (data) {
       const equipments = data.data.map((equipment) => {
         return [
-          <Link href={`/categories/${categorySlug}/${equipment.slug}`}>
+          <Link
+            href={`/categories/${categorySlug}/${equipment.slug}`}
+            className="hover:text-orange-500"
+          >
             {equipment.name}
           </Link>,
           equipment.description,

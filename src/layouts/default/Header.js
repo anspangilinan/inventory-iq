@@ -38,7 +38,7 @@ const Header = (props) => {
             <PopOverMenu
               label={
                 session?.user
-                  ? `${session.user.firstName} ${session.user.lastName}`
+                  ? `${session.user.firstName} ${session.user.lastName} (${session.user.role})`
                   : "User Panel"
               }
               faIconClass={"fa-user"}

@@ -1,5 +1,6 @@
 import PopOverMenu from "@/components/header/PopOverMenu";
-import { useSession, signOut } from "next-auth/react";
+import SearchBar from "@/components/header/SearchBar";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 
 const Header = (props) => {
@@ -33,6 +34,7 @@ const Header = (props) => {
               dropDownItems={mainMenuDropDownItems}
               position="left"
             />
+            <SearchBar />
             <PopOverMenu
               label={
                 session?.user

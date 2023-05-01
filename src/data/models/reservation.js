@@ -20,10 +20,13 @@ const Reservation = new mongoose.Schema({
   },
   dateCreated: {
     type: Date,
+    default: Date.now,
   },
   comments: [{ body: "string", by: mongoose.Schema.Types.ObjectId }],
   status: {
     type: String,
+    enum: ["pending", "approved"],
+    default: "pending",
   },
 });
 

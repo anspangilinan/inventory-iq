@@ -30,7 +30,6 @@ export default async function handler(req, res) {
           equipment: req.body.equipmentId,
           user: userId,
           quantity: req.body.quantity,
-          dateCreated: Date(0),
           dateStart: new Date(req.body.startDate),
           dateEnd: new Date(req.body.endDate),
         });

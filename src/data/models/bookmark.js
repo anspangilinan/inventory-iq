@@ -21,7 +21,7 @@ const Bookmark = new mongoose.Schema({
   dateCreated: {
     type: Date,
   },
-  comments: [{ body: "string", by: mongoose.Schema.Types.ObjectId }],
+  comments: [{ body: "string" }],
 });
 
 export default mongoose.models.Bookmark || mongoose.model("Bookmark", Bookmark);

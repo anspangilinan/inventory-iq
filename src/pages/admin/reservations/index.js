@@ -31,7 +31,7 @@ const Reservations = () => {
       let response = await fetchReservations();
       const reservations = response.data.map((reservation) => {
         return {
-          rowLink: `/reservations/${reservation._id}`,
+          rowLink: `/admin/reservations/${reservation._id}`,
           items: [
             `${reservation.equipment.name}`,
             reservation.quantity,

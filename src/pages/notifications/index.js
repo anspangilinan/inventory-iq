@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { CardTable } from "@/components/table";
+import { formatDate } from "@/lib/utils/date";
 
 async function fetchNotifications(userId) {
   const response = await fetch(`/api/user/${userId}/notifications`, {
@@ -27,16 +28,11 @@ const Notifications = () => {
   useEffect(() => {
     async function fetchFromApi(userId) {
       let response = await fetchNotifications(userId);
-      const notifications = response.data.map((reservation) => {
+      console.log({ response });
+      const notifications = response.data.map((notification) => {
         return {
-          rowLink: `/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`,
-          items: [
-            reservation.equipment.name,
-            reservation.quantity,
-            new Date(reservation.dateStart).toDateString(),
-            new Date(reservation.dateEnd).toDateString(),
-            <Link href={`/reservation/${reservation._id}`}>View Details</Link>,
-          ],
+          rowLink: `/reservations/${notification.reservation._id}`,
+          items: [formatDate(notification.dateCreated), notification.message],
         };
       });
       setNotifications(notifications);

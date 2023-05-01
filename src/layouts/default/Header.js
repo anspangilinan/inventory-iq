@@ -11,7 +11,7 @@ const Header = () => {
     { link: "/", label: "Home", faClass: "fa-home" },
     { link: "/bookmarks", label: "Bookmarks", faClass: "fa-bookmark" },
     { link: "/reservations", label: "Reservations", faClass: "fa-basket-shopping", },
-    // { link: "/notifications", label: "Notifications", faClass: "fa-bell" },
+    { link: "/notifications", label: "Notifications", faClass: "fa-bell" },
     // { link: "/help", label: "Help", faClass: "fa-question" },
     // { link: "/settings", label: "Settings", faClass: "fa-cog" },
   ];

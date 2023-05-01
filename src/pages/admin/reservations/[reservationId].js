@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
+import { toast, ToastContainer } from "react-toastify";
 import useSWR from "swr";
 
 export async function getServerSideProps(context) {
@@ -12,6 +13,24 @@ export async function getServerSideProps(context) {
   return {
     props: { reservationId },
   };
+}
+
+async function updateReservation({ reservationId, body }) {
+  const response = await fetch(`/api/reservations/${reservationId}`, {
+    method: "PATCH",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Something went wrong!");
+  }
+
+  return data;
 }
 
 const EquipmentDetails = ({ reservationId }) => {
@@ -28,9 +47,29 @@ const EquipmentDetails = ({ reservationId }) => {
     }
   }, [data]);
 
+  const statusChange = async (status) => {
+    await updateReservation({
+      reservationId: reservation._id,
+      body: { status },
+    });
+    toast.success(`Reservation ${status}`);
+  };
+
   return (
     reservation !== undefined && (
       <section className="relative bg-blueGray-200 mt-[300px]">
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
         <div className="container mx-auto w-full lg:w-5/6">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
             <div className="px-6">
@@ -97,10 +136,16 @@ const EquipmentDetails = ({ reservationId }) => {
                   </div>
                   {isAdmin && reservation.status == "pending" && (
                     <div className="mt-8 mb-2 text-blueGray-600 flex items-center">
-                      <button className="w-3/4 bg-green-200 text-green-800 active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                      <button
+                        className="w-3/4 bg-green-200 text-green-800 active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        onClick={async () => await statusChange("approved")}
+                      >
                         Approve
                       </button>
-                      <button className="w-3/4 bg-red-200 text-red-800 active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                      <button
+                        className="w-3/4 bg-red-200 text-red-800 active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        onClick={async () => await statusChange("rejected")}
+                      >
                         Reject
                       </button>
                     </div>

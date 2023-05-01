@@ -85,7 +85,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (router.pathname == "/"
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-red-500 hover:text-red-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                 >
@@ -107,7 +107,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (router.pathname == "/reservations"
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-red-500 hover:text-red-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                 >
@@ -129,7 +129,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (router.pathname.indexOf("/bookmarks") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-red-500 hover:text-red-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                 >
@@ -160,7 +160,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (router.pathname.indexOf("/profile") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-red-500 hover:text-red-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                 >
@@ -181,7 +181,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (router.pathname.indexOf("/notifications") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-red-500 hover:text-red-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                 >
@@ -221,7 +221,7 @@ export default function Sidebar() {
                   className={
                     "text-xs uppercase py-3 font-bold block " +
                     (router.pathname == "/admin/reservations"
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      ? "text-red-500 hover:text-red-600"
                       : "text-blueGray-700 hover:text-blueGray-500")
                   }
                 >

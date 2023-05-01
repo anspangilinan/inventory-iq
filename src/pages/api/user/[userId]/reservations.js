@@ -10,9 +10,10 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const { userId, equipmentId } = req.query;
+        console.log({ equipmentId });
         const query = {
           user: userId,
-          ...(equipmentId && { equipmentId: equipmentId }),
+          ...(equipmentId && { equipment: equipmentId }),
         };
         const reservations = await Reservation.find(query)
           .populate({
@@ -27,6 +28,7 @@ export default async function handler(req, res) {
             path: "user",
             model: "User",
           });
+        console.log({ query, reservations });
         res.status(200).json({ success: true, data: reservations });
       } catch (error) {
         console.log({ error });

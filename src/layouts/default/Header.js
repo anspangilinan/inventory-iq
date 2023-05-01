@@ -6,12 +6,22 @@ const Header = () => {
   const { data: session } = useSession();
   const isAdmin = session?.user.role == "admin";
 
+  // prettier-ignore
   let mainMenuDropDownItems = [
     { link: "/", label: "Home", faClass: "fa-home" },
     { link: "/bookmarks", label: "Bookmarks", faClass: "fa-bookmark" },
+    { link: "/reservations", label: "Reservations", faClass: "fa-basket-shopping", },
     // { link: "/notifications", label: "Notifications", faClass: "fa-bell" },
     // { link: "/help", label: "Help", faClass: "fa-question" },
     // { link: "/settings", label: "Settings", faClass: "fa-cog" },
+  ];
+
+  const adminMenuDropDownItems = [
+    {
+      link: "/admin/reservations",
+      label: "(Admin) Reservations",
+      faClass: "fa-basket-shopping",
+    },
   ];
 
   // admin panels:
@@ -19,18 +29,13 @@ const Header = () => {
   if (isAdmin) {
     mainMenuDropDownItems = [
       ...mainMenuDropDownItems,
-      {
-        link: "/reservations",
-        label: "Reservations",
-        faClass: "fa-basket-shopping",
-      },
+      ...adminMenuDropDownItems,
     ];
   }
 
   // prettier-ignore
   const userPanelDropDownItems = [
     { link: "/profile", label: "Profile" },
-    { link: "/profile/reservations", label: "My Reservations" },
     { onClickHandler: signOut, label: "Logout" },
   ];
   return (
@@ -51,7 +56,7 @@ const Header = () => {
                   ? `${session.user.firstName} ${session.user.lastName}`
                   : "User Panel"
               }
-              subLabel={`${session.user.role}`}
+              subLabel={session?.user && `${session.user.role}`}
               faIconClass={"fa-user"}
               dropDownItems={userPanelDropDownItems}
               position="right"

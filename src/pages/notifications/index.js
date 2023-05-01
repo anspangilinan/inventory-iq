@@ -31,11 +31,7 @@ const Notifications = () => {
         return {
           rowLink: `/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`,
           items: [
-            <Link
-              href={`/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`}
-            >
-              {reservation.equipment.name}
-            </Link>,
+            reservation.equipment.name,
             reservation.quantity,
             new Date(reservation.dateStart).toDateString(),
             new Date(reservation.dateEnd).toDateString(),

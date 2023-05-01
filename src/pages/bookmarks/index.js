@@ -39,7 +39,6 @@ const Bookmarks = () => {
             reservation.quantity,
             new Date(reservation.dateStart).toDateString(),
             new Date(reservation.dateEnd).toDateString(),
-            <Link href={`/reservation/${reservation._id}`}>View Details</Link>,
           ],
         };
       });

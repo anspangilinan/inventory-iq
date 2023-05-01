@@ -24,15 +24,7 @@ const EquipmentsIndex = ({ categorySlug }) => {
       const equipments = data.data.map((equipment) => {
         return {
           rowLink: `/categories/${categorySlug}/${equipment.slug}`,
-          items: [
-            <Link
-              href={`/categories/${categorySlug}/${equipment.slug}`}
-              className="hover:text-orange-500"
-            >
-              {equipment.name}
-            </Link>,
-            equipment.description,
-          ],
+          items: [equipment.name, equipment.description],
         };
       });
       setEquipments(equipments);

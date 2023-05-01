@@ -42,7 +42,7 @@ const TBody = ({ tableData, colspan }) => {
           return (
             <tr
               key={i}
-              className="hover:bg-gray-100 cursor-pointer"
+              className="hover:bg-gray-100 cursor-pointer text-blueGray-600"
               onClick={() => {
                 if (rowLink) window.location = rowLink;
               }}

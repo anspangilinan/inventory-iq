@@ -168,8 +168,8 @@ const EquipmentDetails = ({ equipmentSlug }) => {
 
   return (
     <>
-      <div className="w-full md:w-4/6 relative flex justify-between items-center min-w-0 break-words bg-white p-6 shadow-xl rounded-lg">
-        <div className="w-1/2">
+      <div className="w-full md:w-4/6 relative flex-col md:flex justify-between items-center min-w-0 break-words bg-white p-6 shadow-xl rounded-lg">
+        <div className="w-full md:w-1/2 md:flex">
           <div className="flex items-center justify-between pt-4 w-1/2">
             <h3 className="text-3xl font-semibold text-blueGray-600">
               {equipment?.name}
@@ -233,7 +233,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
             </li>
           </ul>
         </div>
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2 md:flex">
           <EquipmentReservations equipmentId={equipment._id} />
         </div>
       </div>

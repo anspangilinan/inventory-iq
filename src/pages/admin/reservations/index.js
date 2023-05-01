@@ -24,12 +24,28 @@ async function fetchReservations() {
 const Reservations = () => {
   const { data: session } = useSession();
   const [reservations, setReservations] = useState([]);
+  const [filteredReservations, setFilteredReservations] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("ALL");
   const columns = ["Equipment", "Quantity", "Status", "Student", "Period"];
 
   useEffect(() => {
     async function fetchFromApi() {
       let response = await fetchReservations();
-      const reservations = response.data.map((reservation) => {
+      setReservations(response.data);
+    }
+
+    if (session?.user) {
+      fetchFromApi();
+    }
+  }, [session?.user]);
+
+  useEffect(() => {
+    const tempReservations = reservations
+      .filter(({ status }) => {
+        console.log({ status });
+        return status == selectedStatus || selectedStatus == "all";
+      })
+      .map((reservation) => {
         return {
           rowLink: `/admin/reservations/${reservation._id}`,
           items: [
@@ -51,20 +67,30 @@ const Reservations = () => {
           ],
         };
       });
-      setReservations(reservations);
-    }
+    setFilteredReservations(tempReservations);
+  }, [selectedStatus]);
 
-    if (session?.user) {
-      fetchFromApi();
-    }
-  }, [session?.user]);
+  useEffect(() => {
+    console.log({ filteredReservations });
+  }, [filteredReservations]);
 
   return (
     <>
       <section className="relative pt-16 items-center">
+        <div className="py-4 my-4">
+          <select
+            className="rounded-md"
+            onChange={(e) => setSelectedStatus(e.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
         <CardTable
           columns={columns}
-          tableData={reservations}
+          tableData={filteredReservations}
           label={"Reservations list"}
         />
       </section>

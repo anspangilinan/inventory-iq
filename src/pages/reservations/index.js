@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { CardTable } from "@/components/table";
 import { formatDate } from "@/lib/utils/date";
+import getStatusDecoration from "@/lib/utils/style/getStatusDecoration";
 
 async function fetchReservations(userId) {
   const response = await fetch(`/api/user/${userId}/reservations`, {
@@ -30,17 +31,16 @@ const Reservations = () => {
       let response = await fetchReservations(userId);
 
       const reservations = response.data.map((reservation) => {
-        // prettier-ignore
-        const statusDecoration =
-          reservation.status == "pending"
-          ? "rounded px-2 py-1 bg-red-100 text-red-400"
-          : "rounded px-2 py-1 bg-green-100 text-green-400";
         return {
           rowLink: `/reservations/${reservation._id}`,
           items: [
             reservation.equipment.name,
             reservation.quantity,
-            <span className={`bold uppercase ${statusDecoration}`}>
+            <span
+              className={`uppercase bold ${getStatusDecoration(
+                reservation.status
+              )}`}
+            >
               {reservation.status}
             </span>,
             <span>

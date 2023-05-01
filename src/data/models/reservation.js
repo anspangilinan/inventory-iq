@@ -25,7 +25,7 @@ const Reservation = new mongoose.Schema({
   comments: [{ body: "string", by: mongoose.Schema.Types.ObjectId }],
   status: {
     type: String,
-    enum: ["pending", "approved"],
+    enum: ["pending", "approved", "rejected"],
     default: "pending",
   },
 });

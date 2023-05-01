@@ -1,5 +1,6 @@
 import DefaultLayout from "@/layouts/default";
 import "@/styles/globals.css";
+import "@/styles/calendar.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";

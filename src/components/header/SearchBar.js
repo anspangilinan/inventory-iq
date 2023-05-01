@@ -6,7 +6,7 @@ import useSWR from "swr";
 const SearchBar = () => {
   const [equipments, setEquipments] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
-  const [searchQuery, setSearchQuery] = useState();
+  const [searchQuery, setSearchQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
   const { data } = useSWR(`/api/equipment/`, jsonFetcher);
 
@@ -71,9 +71,12 @@ const SearchBar = () => {
       <div className={`${showResults && searchQuery ? "block" : "hidden"}`}>
         <div className="absolute z-50 w-1/5">
           <ul className="bg-white border border-gray-100 w-full ml-2">
-            {searchResult.map((equipment) => {
+            {searchResult.map((equipment, i) => {
               return (
-                <li className="text-sm text-blueGray-700 pr-2 pl-4 py-2 border-b-1 border-gray-100 relative cursor-pointer hover:text-orange-400 hover:bg-gray-200">
+                <li
+                  key={i}
+                  className="text-sm text-blueGray-700 pr-2 pl-4 py-2 border-b-1 border-gray-100 relative cursor-pointer hover:text-orange-400 hover:bg-gray-200"
+                >
                   <Link
                     href={`/categories/${equipment.category.slug}/${equipment.slug}`}
                     className=""

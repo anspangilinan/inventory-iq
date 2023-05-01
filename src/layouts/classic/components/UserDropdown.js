@@ -27,12 +27,8 @@ const UserDropdown = () => {
         }}
       >
         <div className="items-center flex">
-          <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
-            <img
-              alt="..."
-              className="w-full rounded-full align-middle border-none shadow-lg"
-              src="/img/team-1-800x800.jpg"
-            />
+          <span className="w-12 h-12 text-sm text-white bg-blueGray-700 inline-flex items-center justify-center rounded-full">
+            <i className="fas fa-user-circle text-white text-3xl"></i>
           </span>
         </div>
       </a>

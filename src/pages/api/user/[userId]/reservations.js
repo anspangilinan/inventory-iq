@@ -10,10 +10,11 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const { userId, equipmentId } = req.query;
-        const reservations = await Reservation.find({
+        const query = {
           user: userId,
-          equipment: equipmentId,
-        })
+          ...(equipmentId && { equipmentId: equipmentId }),
+        };
+        const reservations = await Reservation.find(query)
           .populate({
             path: "equipment",
             model: "Equipment",

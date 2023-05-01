@@ -61,8 +61,8 @@ const EquipmentDetails = ({ reservationId }) => {
         <div className="container mx-auto w-full lg:w-5/6">
           <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg">
             <div className="px-6">
-              <div className="flex items-center justify-between my-6">
-                <div className="text-left w-9/12 pl-3 pr-6 text-blueGray-700">
+              <div className="flex-col md:flex items-center justify-between my-6">
+                <div className="text-left w-full md:w-3/4 pl-3 pr-6 text-blueGray-700">
                   <span className="text-xl text-blueGray-700  font-semibold ">
                     Reservation Details
                   </span>
@@ -139,7 +139,7 @@ const EquipmentDetails = ({ reservationId }) => {
                     </div>
                   )}
                 </div>
-                <div>
+                <div className="w-full md:w-1/4">
                   <Calendar
                     tileDisabled={() => true}
                     value={[reservation.dateStart, reservation.dateEnd]}

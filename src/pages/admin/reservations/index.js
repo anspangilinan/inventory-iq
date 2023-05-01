@@ -42,7 +42,6 @@ const Reservations = () => {
   useEffect(() => {
     const tempReservations = reservations
       .filter(({ status }) => {
-        console.log({ status });
         return status == selectedStatus || selectedStatus == "all";
       })
       .map((reservation) => {
@@ -69,10 +68,6 @@ const Reservations = () => {
       });
     setFilteredReservations(tempReservations);
   }, [selectedStatus]);
-
-  useEffect(() => {
-    console.log({ filteredReservations });
-  }, [filteredReservations]);
 
   return (
     <>

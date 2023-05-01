@@ -28,7 +28,6 @@ const Notifications = () => {
   useEffect(() => {
     async function fetchFromApi(userId) {
       let response = await fetchNotifications(userId);
-      console.log({ response });
       const notifications = response.data.map((notification) => {
         return {
           rowLink: `/reservations/${notification.reservation._id}`,

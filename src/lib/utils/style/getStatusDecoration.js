@@ -1,9 +1,9 @@
 const getStatusDecoration = (status) => {
   return status == "rejected"
-    ? " rounded px-2 py-1 bg-red-200 text-red-800 "
+    ? " text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-red-600 bg-red-200 uppercase last:mr-0 mr-1 "
     : status == "approved"
-    ? " rounded px-2 py-1 bg-green-200 text-green-800 "
-    : " rounded px-2 py-1 bg-orange-200 text-orange-800 ";
+    ? " text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-emerald-600 bg-emerald-200 uppercase last:mr-0 mr-1 "
+    : " text-xs font-semibold inline-block py-1 px-2 uppercase rounded text-amber-600 bg-amber-200 uppercase last:mr-0 mr-1 ";
 };
 
 export default getStatusDecoration;

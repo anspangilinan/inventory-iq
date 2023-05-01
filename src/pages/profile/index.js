@@ -54,9 +54,9 @@ const Profile = () => {
   }, [session?.user]);
 
   return (
-    <section className="relative bg-blueGray-200 mt-[300px]">
+    <>
       <div className="container mx-auto w-full lg:w-4/6">
-        <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
+        <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg">
           <div className="px-6">
             <div className="flex flex-wrap justify-center">
               <div className="w-full lg:w-4/12 px-4 lg:order-1">
@@ -112,7 +112,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </section>
+    </>
   );
 };
 

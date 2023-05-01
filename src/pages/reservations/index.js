@@ -61,13 +61,12 @@ const Reservations = () => {
 
   return (
     <>
-      <section className="relative pt-16 items-center">
-        <CardTable
-          columns={columns}
-          tableData={reservations}
-          label={"Reservations list"}
-        />
-      </section>
+      <CardTable
+        columns={columns}
+        tableData={reservations}
+        label={"Reservations list"}
+        color={"light"}
+      />
     </>
   );
 };

@@ -1,9 +1,9 @@
-import DefaultLayout from "@/layouts/default";
-import "@/styles/globals.css";
-import "@/styles/calendar.css";
+import ClassicLayout from "@/layouts/classic/Layout";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
+import "@/styles/calendar.css";
+import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import { Fragment } from "react";
@@ -11,7 +11,7 @@ import { Fragment } from "react";
 function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   const Layout =
     Component.layout ||
-    (({ children }) => <DefaultLayout>{children}</DefaultLayout>);
+    (({ children }) => <ClassicLayout>{children}</ClassicLayout>);
 
   return (
     <SessionProvider session={session}>

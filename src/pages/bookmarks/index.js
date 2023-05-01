@@ -52,13 +52,12 @@ const Bookmarks = () => {
 
   return (
     <>
-      <section className="relative pt-16 items-center">
-        <CardTable
-          columns={columns}
-          tableData={bookmarks}
-          label={"Bookmarks list"}
-        />
-      </section>
+      <CardTable
+        columns={columns}
+        tableData={bookmarks}
+        label={"Bookmarks list"}
+        color={"light"}
+      />
     </>
   );
 };

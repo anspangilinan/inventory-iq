@@ -25,7 +25,7 @@ const Reservations = () => {
   const { data: session } = useSession();
   const [reservations, setReservations] = useState([]);
   const [filteredReservations, setFilteredReservations] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState("ALL");
+  const [selectedStatus, setSelectedStatus] = useState("all");
   const columns = ["Equipment", "Quantity", "Status", "Student", "Period"];
 
   useEffect(() => {
@@ -67,11 +67,11 @@ const Reservations = () => {
         };
       });
     setFilteredReservations(tempReservations);
-  }, [selectedStatus]);
+  }, [reservations, selectedStatus]);
 
   return (
     <>
-      <section className="relative pt-16 items-center">
+      <section className="relative">
         <div className="py-4 my-4">
           <select
             className="rounded-md"

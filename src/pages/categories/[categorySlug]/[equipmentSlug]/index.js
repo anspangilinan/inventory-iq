@@ -69,11 +69,11 @@ const EquipmentDetails = ({ equipmentSlug }) => {
 
   const reserveHandler = async () => {
     if (quantity == 0) {
-      toast.error("Set a quantity");
+      toast.error("Please set a quantity");
     } else if (startDate === null) {
-      toast.error("Set a Start Date");
+      toast.error("Select a start date");
     } else if (endDate === null) {
-      toast.error("Set an End Date");
+      toast.error("Select an End Date");
     } else {
       await createReservation({
         userId: session.user._id,
@@ -85,7 +85,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
         },
       });
 
-      toast.success("Equipment reserved!");
+      toast.success("Reservation submitted");
       setDateRange([null, null]);
       setQuantity(0);
     }
@@ -156,6 +156,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
                       endDate={endDate}
                       onChange={dateChange}
                       withPortal
+                      dateFormat="MMMM d, yyyy"
                       className="border-0 px-6 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-300 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     />
                   </div>

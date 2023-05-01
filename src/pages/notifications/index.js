@@ -28,17 +28,20 @@ const Notifications = () => {
     async function fetchFromApi(userId) {
       let response = await fetchNotifications(userId);
       const notifications = response.data.map((reservation) => {
-        return [
-          <Link
-            href={`/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`}
-          >
-            {reservation.equipment.name}
-          </Link>,
-          reservation.quantity,
-          new Date(reservation.dateStart).toDateString(),
-          new Date(reservation.dateEnd).toDateString(),
-          <Link href={`/reservation/${reservation._id}`}>View Details</Link>,
-        ];
+        return {
+          rowLink: `/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`,
+          items: [
+            <Link
+              href={`/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`}
+            >
+              {reservation.equipment.name}
+            </Link>,
+            reservation.quantity,
+            new Date(reservation.dateStart).toDateString(),
+            new Date(reservation.dateEnd).toDateString(),
+            <Link href={`/reservation/${reservation._id}`}>View Details</Link>,
+          ],
+        };
       });
       setNotifications(notifications);
     }

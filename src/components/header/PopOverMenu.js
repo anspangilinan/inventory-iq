@@ -24,7 +24,13 @@ const DropDownItem = ({ link, onClickHandler, label, faClass }) => {
   );
 };
 
-const PopOverMenu = ({ label, faIconClass, dropDownItems, position }) => {
+const PopOverMenu = ({
+  label,
+  subLabel,
+  faIconClass,
+  dropDownItems,
+  position,
+}) => {
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
   const btnDropdownRef = createRef();
   const popoverDropdownRef = createRef();
@@ -84,6 +90,13 @@ const PopOverMenu = ({ label, faIconClass, dropDownItems, position }) => {
           }
         >
           {label}
+        </span>
+        <span
+          className={
+            "text-sm pb-0 px-4 font-bold block w-full whitespace-nowrap bg-transparent text-blueGray-400"
+          }
+        >
+          {subLabel}
         </span>
         <DropDownItems />
       </div>

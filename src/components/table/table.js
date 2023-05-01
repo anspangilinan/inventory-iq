@@ -38,9 +38,16 @@ const TBody = ({ tableData, colspan }) => {
     <tbody>
       {tableData.length > 0 ? (
         tableData?.map((row, i) => {
+          const rowLink = row.rowLink;
           return (
-            <tr key={i} className="hover:bg-gray-100">
-              {row.map((column, i) => {
+            <tr
+              key={i}
+              className="hover:bg-gray-100 cursor-pointer"
+              onClick={() => {
+                if (rowLink) window.location = rowLink;
+              }}
+            >
+              {row.items.map((column, i) => {
                 return (
                   <td
                     key={i}

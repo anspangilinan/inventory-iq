@@ -23,23 +23,34 @@ async function fetchReservations(userId) {
 const Reservations = () => {
   const { data: session } = useSession();
   const [reservations, setReservations] = useState([]);
-  const columns = ["Equipment", "Quantity", "Start Date", "End Date", ""];
+  const columns = [
+    "Equipment",
+    "Quantity",
+    "Status",
+    "Start Date",
+    "End Date",
+    "",
+  ];
 
   useEffect(() => {
     async function fetchFromApi(userId) {
       let response = await fetchReservations(userId);
       const reservations = response.data.map((reservation) => {
-        return [
-          <Link
-            href={`/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`}
-          >
-            {reservation.equipment.name}
-          </Link>,
-          reservation.quantity,
-          new Date(reservation.dateStart).toDateString(),
-          new Date(reservation.dateEnd).toDateString(),
-          <Link href={`/reservations/${reservation._id}`}>View Details</Link>,
-        ];
+        return {
+          rowLink: `/reservations/${reservation._id}`,
+          items: [
+            <Link
+              href={`/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`}
+            >
+              {reservation.equipment.name}
+            </Link>,
+            reservation.quantity,
+            <span className="text-red-700">{reservation.status}</span>,
+            new Date(reservation.dateStart).toDateString(),
+            new Date(reservation.dateEnd).toDateString(),
+            <Link href={`/reservations/${reservation._id}`}>View Details</Link>,
+          ],
+        };
       });
       setReservations(reservations);
     }

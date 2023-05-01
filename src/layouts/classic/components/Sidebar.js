@@ -233,7 +233,7 @@ export default function Sidebar() {
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                  My Reservations
+                  Manage Reservations
                 </Link>
               </li>
             </ul>

@@ -57,9 +57,9 @@ const EquipmentDetails = ({ reservationId }) => {
 
   return (
     reservation !== undefined && (
-      <section className="relative bg-blueGray-200 mt-[300px]">
+      <section className="relative">
         <div className="container mx-auto w-full lg:w-5/6">
-          <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
+          <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg">
             <div className="px-6">
               <div className="flex items-center justify-between my-6">
                 <div className="text-left w-9/12 pl-3 pr-6 text-blueGray-700">

@@ -33,7 +33,7 @@ async function updateReservation({ reservationId, body }) {
   return data;
 }
 
-const EquipmentDetails = ({ reservationId }) => {
+const ReservationDetails = ({ reservationId }) => {
   const [reservation, setReservation] = useState(undefined);
 
   const { data } = useSWR(`/api/reservations/${reservationId}`, jsonFetcher);
@@ -57,19 +57,35 @@ const EquipmentDetails = ({ reservationId }) => {
 
   return (
     reservation !== undefined && (
-      <>
+      <section className="relative">
         <div className="container mx-auto w-full lg:w-5/6">
-          <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg">
+          <div className="relative flex flex-col min-w-0 break-words bg-white w-full md:w-3/5 mb-6 shadow-xl rounded-lg">
             <div className="px-6">
-              <div className="flex items-center justify-between my-6">
-                <div className="text-left w-9/12 pl-3 pr-6 text-blueGray-700">
+              <div className="flex flex-col md:flex-row items-center justify-between my-6">
+                <div>
+                  <Calendar
+                    tileDisabled={() => true}
+                    value={[reservation.dateStart, reservation.dateEnd]}
+                    calendarType={"US"}
+                  />
+                </div>
+                <div className="text-left w-full pl-3 pr-6 text-blueGray-700">
                   <span className="text-xl text-blueGray-700  font-semibold ">
                     Reservation Details
                   </span>
                   <div className="text-blueGray-600">
                     <ul>
                       <li>
-                        Equipment:{" "}
+                        <span
+                          className={`uppercase bold ${getStatusDecoration(
+                            reservation.status
+                          )}`}
+                        >
+                          {reservation.status}
+                        </span>
+                      </li>
+                      <li>
+                        <span className="text-gray-400">Equipment:</span>{" "}
                         <Link
                           href={`/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`}
                           className="hover:underline hover:text-orange-500"
@@ -78,7 +94,7 @@ const EquipmentDetails = ({ reservationId }) => {
                         </Link>
                       </li>
                       <li>
-                        Category:{" "}
+                        <span className="text-gray-400">Category:</span>{" "}
                         <Link
                           href={`/categories/${reservation.equipment.category.slug}`}
                           className="hover:underline hover:text-orange-500"
@@ -86,20 +102,16 @@ const EquipmentDetails = ({ reservationId }) => {
                           {reservation.equipment.category.name}
                         </Link>
                       </li>
-                      <li>Quantity: {reservation.quantity}</li>
                       <li>
-                        Period: {formatDate(reservation.dateStart)}
-                        {" - "}
-                        {formatDate(reservation.dateEnd)}
+                        <span className="text-gray-400">Quantity:</span>{" "}
+                        {reservation.quantity}
                       </li>
                       <li>
-                        Status:{" "}
-                        <span
-                          className={`uppercase bold ${getStatusDecoration(
-                            reservation.status
-                          )}`}
-                        >
-                          {reservation.status}
+                        <span className="text-gray-400">Period:</span>{" "}
+                        <span className="text-amber-600">
+                          {formatDate(reservation.dateStart)}
+                          {" - "}
+                          {formatDate(reservation.dateEnd)}
                         </span>
                       </li>
                     </ul>
@@ -111,18 +123,23 @@ const EquipmentDetails = ({ reservationId }) => {
                   <div className=" text-blueGray-600">
                     <ul>
                       <li>
-                        {`Name: ${reservation.user.firstName}  ${reservation.user.lastName}`}
+                        <span className="text-gray-400">Name:</span>{" "}
+                        {`${reservation.user.firstName}  ${reservation.user.lastName}`}
                       </li>
-                      <li>Email: {reservation.user.email}</li>
+                      <li>
+                        <span className="text-gray-400">Email:</span>{" "}
+                        {reservation.user.email}
+                      </li>
                       {reservation.user.grade && (
                         <li className="mb-2 text-blueGray-600">
                           <i className="fas fa-chalkboard mr-2 text-lg text-blueGray-400"></i>
-                          {` Grade: ${reservation.user.grade}  ${reservation.user.section}`}
+                          <span className="text-gray-400">Grade:</span>{" "}
+                          {`${reservation.user.grade}  ${reservation.user.section}`}
                         </li>
                       )}
                     </ul>
                   </div>
-                  {isAdmin && reservation.status == "pending" && (
+                  {isAdmin && reservation.status != "pending" && (
                     <div className="mt-8 mb-2 text-blueGray-600 flex items-center">
                       <button
                         className="w-3/4 bg-green-200 text-green-800 active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -139,19 +156,13 @@ const EquipmentDetails = ({ reservationId }) => {
                     </div>
                   )}
                 </div>
-                <div>
-                  <Calendar
-                    tileDisabled={() => true}
-                    value={[reservation.dateStart, reservation.dateEnd]}
-                  />
-                </div>
               </div>
             </div>
           </div>
         </div>
-      </>
+      </section>
     )
   );
 };
 
-export default EquipmentDetails;
+export default ReservationDetails;

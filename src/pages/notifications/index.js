@@ -30,7 +30,6 @@ const Notifications = () => {
       let response = await fetchNotifications(userId);
       const notifications = response.data.map((notification) => {
         return {
-          rowLink: `/reservations/${notification.reservation._id}`,
           items: [formatDate(notification.dateCreated), notification.message],
         };
       });

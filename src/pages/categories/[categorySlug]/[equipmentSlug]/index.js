@@ -82,6 +82,7 @@ const EquipmentReservations = ({ equipmentId }) => {
 
       const reservations = response.data.map((reservation) => {
         return {
+          rowLink: `/reservations/${reservation._id}`,
           items: [
             reservation.quantity,
             <span>

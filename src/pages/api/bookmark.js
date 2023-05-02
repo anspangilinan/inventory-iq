@@ -1,5 +1,5 @@
-import dbConnect from "../../../../data/db";
-import Bookmark from "../../../../data/models/bookmark";
+import dbConnect from "@/data/db";
+import bookmark from "@/data/models/bookmark";
 
 export default async function handler(req, res) {
   const { method } = req;

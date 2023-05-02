@@ -1,5 +1,6 @@
 import dbConnect from "../../../data/db";
 import Equipment from "../../../data/models/equipment";
+import EquipmentCategory from "../../../data/models/equipmentCategory";
 
 export default async function handler(req, res) {
   const { method } = req;

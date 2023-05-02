@@ -1,4 +1,6 @@
 import { CardTable } from "@/components/table";
+import Bookmark from "@/components/bookmark";
+import { GET, POST } from "@/lib/fetcher";
 import jsonFetcher from "@/lib/jsonFetcher";
 import { formatDate } from "@/lib/utils/date";
 import getStatusDecoration from "@/lib/utils/style/getStatusDecoration";
@@ -16,59 +18,16 @@ export async function getServerSideProps(context) {
 }
 
 async function fetchReservations(userId, equipmentId) {
-  const response = await fetch(
-    `/api/user/${userId}/reservations?equipmentId=${equipmentId}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong!");
-  }
-
-  return data;
+  return await GET({
+    url: `/api/user/${userId}/reservations?equipmentId=${equipmentId}`,
+  });
 }
 
 async function createReservation({ userId, body }) {
-  const response = await fetch(`/api/user/${userId}/reservations`, {
-    method: "POST",
+  return await POST({
+    url: `/api/user/${userId}/reservations`,
     body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-    },
   });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong!");
-  }
-
-  return data;
-}
-
-async function upsertBookmark({ userId, body }) {
-  const response = await fetch(`/api/user/${userId}/bookmarks`, {
-    method: "POST",
-    body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong!");
-  }
-
-  return data;
 }
 
 const EquipmentReservations = ({ equipmentId }) => {
@@ -103,10 +62,10 @@ const EquipmentReservations = ({ equipmentId }) => {
       setReservations(reservations);
     }
 
-    if (session?.user) {
+    if ((session?.user?._id, equipmentId)) {
       fetchFromApi(session?.user._id, equipmentId);
     }
-  }, [session?.user]);
+  }, [session?.user, equipmentId]);
 
   return (
     <>
@@ -128,7 +87,6 @@ const EquipmentDetails = ({ equipmentSlug }) => {
   const { data: session } = useSession();
 
   const { data } = useSWR(`/api/equipment/${equipmentSlug}`, jsonFetcher);
-
   useEffect(() => {
     if (data) {
       setEquipment(data.data);
@@ -163,10 +121,6 @@ const EquipmentDetails = ({ equipmentSlug }) => {
     }
   };
 
-  const bookmarkHandler = async () => {
-    // upsertBookmark;
-  };
-
   return (
     <>
       <div className="w-full md:w-full relative flex-col md:flex justify-between items-center min-w-0 break-words bg-white p-6 shadow-xl rounded-lg">
@@ -175,9 +129,10 @@ const EquipmentDetails = ({ equipmentSlug }) => {
             <h3 className="text-3xl font-semibold text-blueGray-600">
               {equipment?.name}
             </h3>
-            <span className="text-3xl text-gray-600 hover:text-orange-400 hover:cursor-pointer">
-              <i className="fa fa-bookmark"></i>
-            </span>
+            <Bookmark
+              userId={session?.user._id}
+              params={{ equipmentId: equipment?._id }}
+            />
           </div>
           <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
             {equipment?.description}

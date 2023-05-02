@@ -1,40 +1,8 @@
 /* eslint-disable react/jsx-no-target-blank */
+import { GET } from "@/lib/fetcher";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
-async function fetchReservations(userId) {
-  const response = await fetch(`/api/user/${userId}/reservations`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong!");
-  }
-
-  return data;
-}
-
-async function fetchBookmarks(userId) {
-  const response = await fetch(`/api/user/${userId}/bookmarks`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong!");
-  }
-
-  return data;
-}
 const Profile = () => {
   const { data: session } = useSession();
   const [reservations, setReservations] = useState([]);
@@ -42,8 +10,10 @@ const Profile = () => {
 
   useEffect(() => {
     async function fetchFromApi(userId) {
-      const reservations = await fetchReservations(userId);
-      const bookmarks = await fetchBookmarks(userId);
+      const reservations = await GET({
+        url: `/api/user/${userId}/reservations`,
+      });
+      const bookmarks = await GET({ url: `/api/user/${userId}/bookmarks` });
       setReservations(reservations.data);
       setBookmarks(bookmarks.data);
     }

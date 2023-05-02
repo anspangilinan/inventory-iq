@@ -1,44 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { CardTable } from "@/components/table";
-
-async function fetchBookmarks(userId) {
-  const response = await fetch(`/api/user/${userId}/bookmarks`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong!");
-  }
-
-  return data;
-}
+import { GET } from "@/lib/fetcher";
 
 const Bookmarks = () => {
   const { data: session } = useSession();
   const [bookmarks, setBookmarks] = useState([]);
-  const columns = ["Bookmark Type", "Link"];
+  const columns = ["Link", "Bookmark Type"];
 
   useEffect(() => {
     async function fetchFromApi(userId) {
-      let response = await fetchBookmarks(userId);
+      let response = await GET({ url: `/api/user/${userId}/bookmarks` });
       const bookmarks = response.data.map((reservation) => {
         return {
-          rowLink: `/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`,
+          rowLink: reservation.equipment
+            ? `/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`
+            : `/categories/${reservation.equipment.category.slug}`,
           items: [
-            <Link
-              href={`/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`}
-            >
-              {reservation.equipment.name}
-            </Link>,
-            reservation.quantity,
-            new Date(reservation.dateStart).toDateString(),
-            new Date(reservation.dateEnd).toDateString(),
+            reservation.equipment
+              ? reservation.equipment.name
+              : reservation.category.name,
+            reservation.equipment ? "Equipment" : "Category",
           ],
         };
       });

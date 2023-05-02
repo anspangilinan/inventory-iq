@@ -1,3 +1,4 @@
+import { PATCH } from "@/lib/fetcher";
 import jsonFetcher from "@/lib/jsonFetcher";
 import { formatDate } from "@/lib/utils/date";
 import getStatusDecoration from "@/lib/utils/style/getStatusDecoration";
@@ -16,21 +17,10 @@ export async function getServerSideProps(context) {
 }
 
 async function updateReservation({ reservationId, body }) {
-  const response = await fetch(`/api/reservations/${reservationId}`, {
-    method: "PATCH",
+  return await PATCH({
+    url: `/api/reservations/${reservationId}`,
     body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-    },
   });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong!");
-  }
-
-  return data;
 }
 
 const ReservationDetails = ({ reservationId }) => {

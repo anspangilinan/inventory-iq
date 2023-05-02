@@ -3,23 +3,7 @@ import { useSession } from "next-auth/react";
 import { CardTable } from "@/components/table";
 import { formatDate } from "@/lib/utils/date";
 import getStatusDecoration from "@/lib/utils/style/getStatusDecoration";
-
-async function fetchReservations(userId) {
-  const response = await fetch(`/api/user/${userId}/reservations`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong!");
-  }
-
-  return data;
-}
+import { GET } from "@/lib/fetcher";
 
 const Reservations = () => {
   const { data: session } = useSession();
@@ -28,7 +12,7 @@ const Reservations = () => {
 
   useEffect(() => {
     async function fetchFromApi(userId) {
-      let response = await fetchReservations(userId);
+      let response = await GET({ url: `/api/user/${userId}/reservations` });
 
       const reservations = response.data.map((reservation) => {
         return {

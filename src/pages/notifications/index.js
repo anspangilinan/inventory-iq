@@ -2,23 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { CardTable } from "@/components/table";
 import { formatDate } from "@/lib/utils/date";
-
-async function fetchNotifications(userId) {
-  const response = await fetch(`/api/user/${userId}/notifications`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong!");
-  }
-
-  return data;
-}
+import { GET } from "@/lib/fetcher";
 
 const Notifications = () => {
   const { data: session } = useSession();
@@ -27,7 +11,7 @@ const Notifications = () => {
 
   useEffect(() => {
     async function fetchFromApi(userId) {
-      let response = await fetchNotifications(userId);
+      let response = await GET({ url: `/api/user/${userId}/notifications` });
       const notifications = response.data.map((notification) => {
         return {
           items: [formatDate(notification.dateCreated), notification.message],

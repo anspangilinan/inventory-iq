@@ -10,7 +10,6 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const { userId, equipmentId } = req.query;
-        console.log({ equipmentId });
         const query = {
           user: userId,
           ...(equipmentId && { equipment: equipmentId }),
@@ -28,10 +27,8 @@ export default async function handler(req, res) {
             path: "user",
             model: "User",
           });
-        console.log({ query, reservations });
         res.status(200).json({ success: true, data: reservations });
       } catch (error) {
-        console.log({ error });
         res.status(400).json({ success: false });
       }
       break;

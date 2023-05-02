@@ -9,15 +9,19 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const { userId } = req.query;
-        const bookmarks = await Bookmark.find({ user: userId }).populate({
-          path: "equipment",
-          model: "Equipment",
-          populate: {
+        const bookmarks = await Bookmark.find()
+          .populate({
+            path: "equipment",
+            model: "Equipment",
+            populate: {
+              path: "category",
+              model: "EquipmentCategory",
+            },
+          })
+          .populate({
             path: "category",
             model: "EquipmentCategory",
-          },
-        });
+          });
         res.status(200).json({ success: true, data: bookmarks });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -26,16 +30,31 @@ export default async function handler(req, res) {
     case "POST":
       try {
         const { userId } = req.query;
-        const bookmark = await Bookmark.create({
-          equipment: req.body.equipmentId,
+        const bookmarkQuery = {
           user: userId,
-          quantity: req.body.quantity,
-          dateCreated: Date(0),
-          dateStart: new Date(req.body.startDate),
-          dateEnd: new Date(req.body.endDate),
-        });
-        res.status(201).json({ success: true, data: bookmark });
+          $or: [
+            {
+              equipment: req.body.equipmentId,
+            },
+            {
+              category: req.body.categoryId,
+            },
+          ],
+        };
+        const bookmarks = await Bookmark.find(bookmarkQuery);
+        if (bookmarks.length > 0) {
+          await Bookmark.deleteMany(bookmarkQuery);
+          res.status(201).json({ result: "removed from bookmarks" });
+        } else {
+          await Bookmark.create({
+            equipment: req.body.equipmentId,
+            category: req.body.categoryId,
+            user: userId,
+          });
+          res.status(201).json({ result: "added to bookmarks" });
+        }
       } catch (error) {
+        console.log("bookmarks api", { error });
         res.status(400).json({ success: false });
       }
       break;

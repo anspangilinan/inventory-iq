@@ -1,3 +1,4 @@
+import { PATCH } from "@/lib/fetcher";
 import jsonFetcher from "@/lib/jsonFetcher";
 import { formatDate } from "@/lib/utils/date";
 import getStatusDecoration from "@/lib/utils/style/getStatusDecoration";
@@ -16,21 +17,10 @@ export async function getServerSideProps(context) {
 }
 
 async function updateReservation({ reservationId, body }) {
-  const response = await fetch(`/api/reservations/${reservationId}`, {
-    method: "PATCH",
+  return await PATCH({
+    url: `/api/reservations/${reservationId}`,
     body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-    },
   });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Something went wrong!");
-  }
-
-  return data;
 }
 
 const ReservationDetails = ({ reservationId }) => {
@@ -139,7 +129,7 @@ const ReservationDetails = ({ reservationId }) => {
                       )}
                     </ul>
                   </div>
-                  {isAdmin && reservation.status != "pending" && (
+                  {isAdmin && reservation.status == "pending" && (
                     <div className="mt-8 mb-2 text-blueGray-600 flex items-center">
                       <button
                         className="w-3/4 bg-green-200 text-green-800 active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"

@@ -1,10 +1,19 @@
 /* eslint-disable react/jsx-no-target-blank */
 import { GET } from "@/lib/fetcher";
-import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
-const Profile = () => {
-  const { data: session } = useSession();
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  return {
+    props: {
+      user: session.user,
+    },
+  };
+}
+
+const Profile = ({ user }) => {
   const [reservations, setReservations] = useState([]);
   const [bookmarks, setBookmarks] = useState([]);
 
@@ -18,10 +27,10 @@ const Profile = () => {
       setBookmarks(bookmarks.data);
     }
 
-    if (session?.user) {
-      fetchFromApi(session?.user._id);
+    if (user) {
+      fetchFromApi(user._id);
     }
-  }, [session?.user]);
+  }, [user]);
 
   return (
     <>
@@ -50,18 +59,14 @@ const Profile = () => {
             </div>
             <div className="text-center my-12">
               <h3 className="text-4xl font-semibold leading-normal mb-2 text-blueGray-700">
-                {session?.user?.firstName} {session?.user?.lastName}
+                {user.firstName} {user.lastName}
               </h3>
-              <div className="mb-2 text-blueGray-600 mt-10">
-                {session?.user?.email}
-              </div>
-              <div className="mb-2 text-blueGray-600">
-                Role: {session?.user?.role}
-              </div>
-              {session?.user.grade && (
+              <div className="mb-2 text-blueGray-600 mt-10">{user.email}</div>
+              <div className="mb-2 text-blueGray-600">Role: {user.role}</div>
+              {user.grade && (
                 <div className="mb-2 text-blueGray-600">
                   <i className="fas fa-chalkboard mr-2 text-lg text-blueGray-400"></i>{" "}
-                  Grade {session?.user?.grade} - {session?.user?.section}
+                  Grade {user.grade} - {user.section}
                 </div>
               )}
               <div className="mt-8 mb-2 text-blueGray-600">

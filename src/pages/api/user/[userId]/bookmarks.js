@@ -54,7 +54,6 @@ export default async function handler(req, res) {
           res.status(201).json({ result: "added to bookmarks" });
         }
       } catch (error) {
-        console.log("bookmarks api", { error });
         res.status(400).json({ success: false });
       }
       break;

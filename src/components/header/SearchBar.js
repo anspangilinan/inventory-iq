@@ -100,16 +100,13 @@ const SearchBar = () => {
   return (
     <>
       <div className="z-50 w-full">
-        <label htmlFor="simple-search" className="sr-only">
-          Search equipment or category
-        </label>
+        <label className="sr-only">Search equipment or category</label>
         <div className="relative flex w-full flex-wrap items-stretch mb-3">
           <span className="z-50 h-full leading-snug font-normal text-center text-blueGray-300 absolute bg-transparent rounded text-lg items-center justify-center w-8 pl-1 py-2">
             <i className="fas fa-search"></i>
           </span>
           <input
             type="text"
-            id="simple-search"
             className="px-1 py-2 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-base shadow outline-none focus:outline-none focus:shadow-outline w-full pl-10"
             placeholder="Search equipment or category"
             value={searchQuery}

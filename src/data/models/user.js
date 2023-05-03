@@ -42,11 +42,20 @@ const User = new mongoose.Schema({
 });
 
 // ENCRYPTION
-User.pre("save", async function (next) {
-  if (!this.isModified("password")) {
-    next();
+async function preHookForAddress(_this) {
+  console.log({ this: _this });
+  if (_this.isModified("password")) {
+    _this.password = await bcrypt.hash(_this.password, 10);
   }
-  this.password = await bcrypt.hash(this.password, 10);
+}
+
+User.pre("save", async function (next) {
+  await preHookForAddress(this);
+  next();
+});
+
+User.pre("updateOne", { document: true, query: false }, async function (next) {
+  await preHookForAddress(this);
   next();
 });
 

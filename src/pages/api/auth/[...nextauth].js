@@ -53,7 +53,7 @@ export default NextAuth({
   callbacks: {
     // We can pass in additional information from the user document MongoDB returns
     // This could be avatars, role, display name, etc...
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.user = {
           _id: user._id,
@@ -64,6 +64,10 @@ export default NextAuth({
           firstName: user.firstName,
           lastName: user.lastName,
         };
+      }
+      if (trigger === "update") {
+        const newUser = Object.assign({}, token.user, session.user);
+        token.user = newUser;
       }
       return token;
     },

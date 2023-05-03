@@ -69,16 +69,17 @@ const Profile = ({ user }) => {
                   Grade {user.grade} - {user.section}
                 </div>
               )}
-              <div className="mt-8 mb-2 text-blueGray-600">
+              <div className="mt-8 mb-2 flex-col items-center text-blueGray-600">
                 <a
                   href="/profile/edit"
-                  className="w-3/4 bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className="bg-red-600 text-white active:bg-red-400 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 >
                   Edit Profile
                 </a>
+                <div className="mt-8 mb-2 flex-col items-center text-blueGray-600"></div>
                 <a
                   href="/reservations"
-                  className="w-3/4 bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 >
                   View Reservations
                 </a>

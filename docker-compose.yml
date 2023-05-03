@@ -21,6 +21,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: rootuser
       ME_CONFIG_MONGODB_ADMINPASSWORD: p4$$w0rd
+      # ME_CONFIG_MONGODB_URL: mongodb+srv://anspangilinan:3tKbHquI2x09dxsS@cluster0.i23uvdc.mongodb.net/?retryWrites=true&w=majority
       ME_CONFIG_MONGODB_URL: mongodb://rootuser:p4$$w0rd@mongo:27017
 
   web:
@@ -36,6 +37,7 @@ services:
       NODE_ENV: development
       PORT: 3000
       # MONGODB_URL: mongodb+srv://anspangilinan:b5OpBXnHxypkTeh2@cluster0.i23uvdc.mongodb.net/
+      # MONGODB_URL: mongodb+srv://anspangilinan:3tKbHquI2x09dxsS@cluster0.i23uvdc.mongodb.net/?retryWrites=true&w=majority
       MONGODB_URL: mongodb://rootuser:p4$$w0rd@mongo:27017
       MONGODB_NAME: inventory-iq-alpha
       MONGODB_ENABLE_SSL: false

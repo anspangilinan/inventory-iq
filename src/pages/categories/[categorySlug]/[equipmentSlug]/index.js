@@ -117,8 +117,10 @@ const EquipmentDetails = ({ equipmentSlug }) => {
       if (startDate.getTime() >= endDate.getTime()) {
         toast.error("End time must be greater than Start time");
       } else if (
-        startDate.getTime() < new Date().setHours(10, 0) ||
-        startDate.getTime() > new Date().setHours(23, 45)
+        startDate.getTime() <
+          new Date(new Date(startDate).setHours(10, 0)).getTime() ||
+        startDate.getTime() >
+          new Date(new Date(startDate).setHours(23, 45)).getTime()
       ) {
         toast.error(
           "Start time out of valid period. Must be within 10:00 - 23:45"
@@ -185,7 +187,10 @@ const EquipmentDetails = ({ equipmentSlug }) => {
                   className="m-auto"
                   showTimeSelect
                   selected={startDate}
-                  onChange={(date) => setStartDate(date)}
+                  onChange={(date) => {
+                    setStartDate(date);
+                    setEndDate(date);
+                  }}
                   dateFormat="MMMM d, yyyy h:mm aa"
                   timeIntervals={15}
                   filterTime={filterPassedTime}

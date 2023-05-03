@@ -116,8 +116,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
     } else {
       if (startDate.getTime() >= endDate.getTime()) {
         toast.error("End time must be greater than Start time");
-      }
-      if (
+      } else if (
         startDate.getTime() < new Date().setHours(10, 0) ||
         startDate.getTime() > new Date().setHours(23, 45)
       ) {

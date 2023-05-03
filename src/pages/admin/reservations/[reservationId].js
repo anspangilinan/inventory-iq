@@ -97,11 +97,17 @@ const ReservationDetails = ({ reservationId }) => {
                         {reservation.quantity}
                       </li>
                       <li>
+                        <span className="text-gray-400">Date:</span>{" "}
+                        <span className="text-amber-600">
+                          {formatDate(reservation.dateStart, "dateOnly")}
+                        </span>
+                      </li>
+                      <li>
                         <span className="text-gray-400">Period:</span>{" "}
                         <span className="text-amber-600">
-                          {formatDate(reservation.dateStart)}
+                          {formatDate(reservation.dateStart, "time")}
                           {" - "}
-                          {formatDate(reservation.dateEnd)}
+                          {formatDate(reservation.dateEnd, "time")}
                         </span>
                       </li>
                     </ul>

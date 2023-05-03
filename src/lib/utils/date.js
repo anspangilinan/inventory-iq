@@ -17,6 +17,12 @@ export const formatDate = (date, format = "short") => {
         minute: "numeric",
         hour12: false,
       });
+    case "dateOnly":
+      return dateObj.toLocaleDateString("en-us", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
     case "time":
       return curr_time;
   }

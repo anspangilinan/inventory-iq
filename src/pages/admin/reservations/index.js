@@ -45,7 +45,7 @@ const Reservations = () => {
             <span>
               {formatDate(reservation.dateStart)}
               {" — "}
-              {formatDate(reservation.dateEnd)}
+              {formatDate(reservation.dateEnd, "time")}
             </span>,
           ],
         };

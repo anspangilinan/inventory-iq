@@ -66,7 +66,7 @@ const Profile = () => {
               )}
               <div className="mt-8 mb-2 text-blueGray-600">
                 <a
-                  href="#"
+                  href="/profile/edit"
                   className="w-3/4 bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 >
                   Edit Profile

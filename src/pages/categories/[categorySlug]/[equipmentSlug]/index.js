@@ -47,7 +47,7 @@ const EquipmentReservations = ({ equipmentId }) => {
             <span>
               {formatDate(reservation.dateStart)}
               {" — "}
-              {formatDate(reservation.dateEnd)}
+              {formatDate(reservation.dateEnd, "time")}
             </span>,
             <span
               className={`uppercase bold ${getStatusDecoration(
@@ -82,9 +82,22 @@ const EquipmentReservations = ({ equipmentId }) => {
 const EquipmentDetails = ({ equipmentSlug }) => {
   const [equipment, setEquipment] = useState([]);
   const [quantity, setQuantity] = useState(0);
-  const [dateRange, setDateRange] = useState([null, null]);
-  const [startDate, endDate] = dateRange;
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
   const { data: session } = useSession();
+
+  const filterPassedTime = (time) => {
+    const currentDate = new Date();
+    const selectedDate = new Date(time);
+
+    return currentDate.getTime() < selectedDate.getTime();
+  };
+
+  const filterEndPassedTime = (time) => {
+    const selectedDate = new Date(time);
+
+    return startDate.getTime() < selectedDate.getTime();
+  };
 
   const { data } = useSWR(`/api/equipment/${equipmentSlug}`, jsonFetcher);
   useEffect(() => {
@@ -92,10 +105,6 @@ const EquipmentDetails = ({ equipmentSlug }) => {
       setEquipment(data.data);
     }
   }, [data]);
-
-  const dateChange = (update) => {
-    setDateRange(update);
-  };
 
   const reserveHandler = async () => {
     if (quantity == 0) {
@@ -105,22 +114,34 @@ const EquipmentDetails = ({ equipmentSlug }) => {
     } else if (endDate === null) {
       toast.error("Select an End Date");
     } else {
-      await createReservation({
-        userId: session.user._id,
-        body: {
-          equipmentId: equipment._id,
-          quantity,
-          startDate,
-          endDate,
-        },
-      });
+      if (startDate.getTime() >= endDate.getTime()) {
+        toast.error("End time must be greater than Start time");
+      }
+      if (
+        startDate.getTime() < new Date().setHours(10, 0) ||
+        startDate.getTime() > new Date().setHours(23, 45)
+      ) {
+        toast.error(
+          "Start time out of valid period. Must be within 10:00 - 23:45"
+        );
+      } else {
+        await createReservation({
+          userId: session.user._id,
+          body: {
+            equipmentId: equipment._id,
+            quantity,
+            startDate,
+            endDate,
+          },
+        });
 
-      toast.success("Reservation submitted");
-      setDateRange([null, null]);
-      setQuantity(0);
+        toast.success("Reservation submitted");
+        setStartDate(new Date());
+        setEndDate(new Date());
+        setQuantity(0);
+      }
     }
   };
-
   return (
     <>
       <div className="w-full md:w-full relative flex-col md:flex justify-between items-center min-w-0 break-words bg-white p-6 shadow-xl rounded-lg">
@@ -160,17 +181,32 @@ const EquipmentDetails = ({ equipmentSlug }) => {
               </div>
             </li>
             <li className="py-2">
-              <div className="flex flex-wrap items-center">
+              <div className="w-1/2 flex items-center">
                 <i className="fa fa-calendar text-blueGray-600 mr-2"></i>
+
                 <DatePicker
-                  showIcon
-                  selectsRange={true}
-                  startDate={startDate}
-                  endDate={endDate}
-                  onChange={dateChange}
-                  withPortal
-                  dateFormat="MMMM d, yyyy"
-                  className="border-0 px-6 py-3 placeholder-blueGray-300 text-blueGray-600 bg-gray-300 rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  className="m-auto"
+                  showTimeSelect
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                  dateFormat="MMMM d, yyyy h:mm aa"
+                  timeIntervals={15}
+                  filterTime={filterPassedTime}
+                  minTime={new Date().setHours(10, 0)}
+                  maxTime={new Date().setHours(23, 45)}
+                />
+                <DatePicker
+                  className="m-auto w-1/2 left-0"
+                  showTimeSelect
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date)}
+                  dateFormat="h:mm aa"
+                  includeDates={[startDate, startDate]}
+                  showTimeSelectOnly
+                  timeIntervals={15}
+                  filterTime={filterEndPassedTime}
+                  minTime={new Date().setHours(10, 0)}
+                  maxTime={new Date().setHours(23, 45)}
                 />
               </div>
             </li>

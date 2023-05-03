@@ -180,9 +180,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
               </div>
             </li>
             <li className="py-2">
-              <div className="w-1/2 flex items-center">
-                <i className="fa fa-calendar text-blueGray-600 mr-2"></i>
-
+              <div className="w-1/2 flex-row lg:flex items-center">
                 <DatePicker
                   className="m-auto"
                   showTimeSelect
@@ -195,7 +193,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
                   maxTime={new Date().setHours(23, 45)}
                 />
                 <DatePicker
-                  className="m-auto w-1/2 left-0"
+                  className="m-auto lg:w-1/2 left-0"
                   showTimeSelect
                   selected={endDate}
                   onChange={(date) => setEndDate(date)}

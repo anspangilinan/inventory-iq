@@ -6,20 +6,25 @@ import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export async function getServerSideProps(context) {
-  const session = getSession();
-  const router = useRouter();
+  const session = await getSession(context);
 
-  if (session.user.role == "admin") {
-    router.replace("/admin/reservations");
-  }
   return {
-    props: {},
+    props: { user: session.user },
   };
 }
 
-const HomePage = () => {
+const HomePage = ({ user }) => {
   const { data } = useSWR("/api/equipmentCategory", jsonFetcher);
   const [equipmentCategories, setEquipmentCategories] = useState([]);
+  const router = useRouter();
+
+  // check if logged in and redirect to home page if so
+  useEffect(() => {
+    if (user.role == "admin") {
+      router.replace("/admin/reservations");
+    }
+  }, [router]);
+
   useEffect(() => {
     if (data) setEquipmentCategories(data.data);
   }, [data]);

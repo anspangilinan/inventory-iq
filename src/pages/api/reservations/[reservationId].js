@@ -1,6 +1,6 @@
-import dbConnect from "../../.../../../data/db";
-import Reservation from "../../.../../../data/models/reservation";
-import Notification from "../../.../../../data/models/notification";
+import dbConnect from "@/data/db";
+import Reservation from "@/data/models/reservation";
+import Notification from "@/data/models/notification";
 
 export default async function handler(req, res) {
   const { method } = req;

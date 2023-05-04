@@ -14,7 +14,7 @@ const Reservations = () => {
 
   useEffect(() => {
     async function fetchFromApi() {
-      let response = await GET({ url: `/api/reservations` });
+      const response = await GET({ url: `/api/reservations` });
       setReservations(response.data);
     }
 
@@ -29,6 +29,7 @@ const Reservations = () => {
         return status == selectedStatus || selectedStatus == "all";
       })
       .map((reservation) => {
+        console.log({ reservation });
         return {
           rowLink: `/admin/reservations/${reservation._id}`,
           items: [

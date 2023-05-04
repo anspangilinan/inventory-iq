@@ -13,7 +13,12 @@ const Notifications = () => {
     async function fetchFromApi(userId) {
       let response = await GET({ url: `/api/user/${userId}/notifications` });
       const notifications = response.data.map((notification) => {
+        const rowLink =
+          session.user.role == "student"
+            ? `/reservations/${notification.reservation._id}`
+            : `/admin/reservations/${notification.reservation._id}`;
         return {
+          rowLink,
           items: [formatDate(notification.dateCreated), notification.message],
         };
       });

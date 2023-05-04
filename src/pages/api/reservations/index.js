@@ -1,5 +1,8 @@
 import dbConnect from "../../../data/db";
-import Reservation from "../../../data/models/reservation";
+import Reservation from "@/data/models/reservation";
+import Equipment from "@/data/models/equipment";
+import EquipmentCategory from "@/data/models/equipmentCategory";
+import User from "@/data/models/user";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -22,8 +25,10 @@ export default async function handler(req, res) {
             path: "user",
             model: "User",
           });
+        console.log(reservations);
         res.status(200).json({ success: true, data: reservations });
       } catch (error) {
+        console.log({ error });
         res.status(400).json({ success: false });
       }
       break;
@@ -36,6 +41,15 @@ export default async function handler(req, res) {
           quantity: req.body.quantity,
           dateStart: new Date(req.body.startDate),
           dateEnd: new Date(req.body.endDate),
+        });
+        const superAdmins = User.find({ role: "admin" });
+        console.log({ superAdmins });
+        superAdmins.forEach(async (superAdmin) => {
+          await Notification.create({
+            recipient: superAdmin._id,
+            reservation: reservation._id,
+            message: `A new reservation has been requested`,
+          });
         });
         res.status(201).json({ success: true, data: reservation });
       } catch (error) {

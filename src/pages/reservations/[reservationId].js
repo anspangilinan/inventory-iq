@@ -128,7 +128,6 @@ const ReservationDetails = ({ reservationId }) => {
                       </li>
                       {reservation.user.grade && (
                         <li className="mb-2 text-blueGray-600">
-                          <i className="fas fa-chalkboard mr-2 text-lg text-blueGray-400"></i>
                           <span className="text-gray-400">Grade:</span>{" "}
                           {`${reservation.user.grade}  ${reservation.user.section}`}
                         </li>

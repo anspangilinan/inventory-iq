@@ -1,5 +1,7 @@
 import dbConnect from "../../../../data/db";
 import Reservation from "../../../../data/models/reservation";
+import User from "@/data/models/user";
+import Notification from "@/data/models/notification";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -42,8 +44,21 @@ export default async function handler(req, res) {
           dateStart: new Date(req.body.startDate),
           dateEnd: new Date(req.body.endDate),
         });
+        const cursor = User.find({ role: "admin" }).cursor();
+        for (
+          let superAdmin = await cursor.next();
+          superAdmin != null;
+          superAdmin = await cursor.next()
+        ) {
+          await Notification.create({
+            recipient: superAdmin._id,
+            reservation: reservation._id,
+            message: `A new reservation has been requested`,
+          });
+        }
         res.status(201).json({ success: true, data: reservation });
       } catch (error) {
+        console.log({ error });
         res.status(400).json({ success: false });
       }
       break;

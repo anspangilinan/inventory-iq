@@ -10,6 +10,111 @@ export default function Sidebar() {
   const { data: session } = useSession();
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const router = useRouter();
+
+  const UserLinks = () => (
+    <>
+      <hr className="my-4 md:min-w-full" />
+      <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+        Menu
+      </h6>
+      <ul className="md:flex-col md:min-w-full flex flex-col list-none">
+        <li className="items-center">
+          <Link
+            href="/"
+            className={
+              "text-xs uppercase py-3 font-bold block " +
+              (router.pathname == "/"
+                ? "text-red-500 hover:text-red-600"
+                : "text-blueGray-700 hover:text-blueGray-500")
+            }
+          >
+            <i
+              className={
+                "fas fa-home mr-2 text-sm " +
+                (router.pathname == "/" ? "opacity-75" : "text-blueGray-300")
+              }
+            ></i>{" "}
+            Home
+          </Link>
+        </li>
+        <li className="items-center">
+          <Link
+            href="/reservations"
+            className={
+              "text-xs uppercase py-3 font-bold block " +
+              (router.pathname == "/reservations"
+                ? "text-red-500 hover:text-red-600"
+                : "text-blueGray-700 hover:text-blueGray-500")
+            }
+          >
+            <i
+              className={
+                "fas fa-book mr-2 text-sm " +
+                (router.pathname == "/reservations"
+                  ? "opacity-75"
+                  : "text-blueGray-300")
+              }
+            ></i>{" "}
+            My Reservations
+          </Link>
+        </li>
+
+        <li className="items-center">
+          <Link
+            href="/bookmarks"
+            className={
+              "text-xs uppercase py-3 font-bold block " +
+              (router.pathname.indexOf("/bookmarks") !== -1
+                ? "text-red-500 hover:text-red-600"
+                : "text-blueGray-700 hover:text-blueGray-500")
+            }
+          >
+            <i
+              className={
+                "fas fa-bookmark mr-2 text-sm " +
+                (router.pathname.indexOf("/bookmarks") !== -1
+                  ? "opacity-75"
+                  : "text-blueGray-300")
+              }
+            ></i>{" "}
+            Bookmarks
+          </Link>
+        </li>
+      </ul>
+    </>
+  );
+  const AdminLinks = () => (
+    <>
+      <hr className="my-4 md:min-w-full" />
+      <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
+        Admin
+      </h6>
+      <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
+        <li className="items-center">
+          <Link
+            href="/admin/reservations"
+            className={
+              "text-xs uppercase py-3 font-bold block " +
+              (router.pathname == "/admin/reservations"
+                ? "text-red-500 hover:text-red-600"
+                : "text-blueGray-700 hover:text-blueGray-500")
+            }
+          >
+            <i
+              className={
+                "fas fa-newspaper mr-2 text-sm " +
+                (router.pathname == "/admin/reservations"
+                  ? "opacity-75"
+                  : "text-blueGray-300")
+              }
+            ></i>{" "}
+            Manage Reservations
+          </Link>
+        </li>
+      </ul>
+    </>
+  );
+
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -65,93 +170,17 @@ export default function Sidebar() {
                 </div>
               </div>
             </div>
-            <div className="mt-6 mb-4 md:hidden">
-              <SearchBar />
-            </div>
+            {session?.user.role == "student" && (
+              <div className="mt-6 mb-4 md:hidden">
+                <SearchBar />
+              </div>
+            )}
 
-            {/* Divider */}
+            {session?.user.role == "student" && <UserLinks />}
             <hr className="my-4 md:min-w-full" />
-            {/* Heading */}
-            <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Menu
-            </h6>
-            {/* Navigation */}
-
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li className="items-center">
-                <Link
-                  href="/"
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (router.pathname == "/"
-                      ? "text-red-500 hover:text-red-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                >
-                  <i
-                    className={
-                      "fas fa-home mr-2 text-sm " +
-                      (router.pathname == "/"
-                        ? "opacity-75"
-                        : "text-blueGray-300")
-                    }
-                  ></i>{" "}
-                  Home
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link
-                  href="/reservations"
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (router.pathname == "/reservations"
-                      ? "text-red-500 hover:text-red-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                >
-                  <i
-                    className={
-                      "fas fa-book mr-2 text-sm " +
-                      (router.pathname == "/reservations"
-                        ? "opacity-75"
-                        : "text-blueGray-300")
-                    }
-                  ></i>{" "}
-                  My Reservations
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link
-                  href="/bookmarks"
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (router.pathname.indexOf("/bookmarks") !== -1
-                      ? "text-red-500 hover:text-red-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                >
-                  <i
-                    className={
-                      "fas fa-bookmark mr-2 text-sm " +
-                      (router.pathname.indexOf("/bookmarks") !== -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
-                    }
-                  ></i>{" "}
-                  Bookmarks
-                </Link>
-              </li>
-            </ul>
-
-            {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
-            {/* Heading */}
             <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
               {`${session?.user.firstName} ${session?.user.lastName}`}
             </h6>
-
             <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
               <li className="items-center">
                 <Link
@@ -205,37 +234,7 @@ export default function Sidebar() {
                 </div>
               </li>
             </ul>
-            {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
-            {/* Heading */}
-            <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Admin
-            </h6>
-            {/* Navigation */}
-
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-              <li className="items-center">
-                <Link
-                  href="/admin/reservations"
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (router.pathname == "/admin/reservations"
-                      ? "text-red-500 hover:text-red-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                >
-                  <i
-                    className={
-                      "fas fa-newspaper mr-2 text-sm " +
-                      (router.pathname == "/admin/reservations"
-                        ? "opacity-75"
-                        : "text-blueGray-300")
-                    }
-                  ></i>{" "}
-                  Manage Reservations
-                </Link>
-              </li>
-            </ul>
+            {session?.user.role == "admin" && <AdminLinks />}
           </div>
         </div>
       </nav>

@@ -118,12 +118,12 @@ const EquipmentDetails = ({ equipmentSlug }) => {
         toast.error("End time must be greater than Start time");
       } else if (
         startDate.getTime() <
-          new Date(new Date(startDate).setHours(10, 0)).getTime() ||
+          new Date(new Date(startDate).setHours(6, 30)).getTime() ||
         startDate.getTime() >
-          new Date(new Date(startDate).setHours(23, 45)).getTime()
+          new Date(new Date(startDate).setHours(16, 30)).getTime()
       ) {
         toast.error(
-          "Start time out of valid period. Must be within 10:00 - 23:45"
+          "Start time out of valid period. Must be within 6:30 - 16:30"
         );
       } else {
         await createReservation({
@@ -194,8 +194,8 @@ const EquipmentDetails = ({ equipmentSlug }) => {
                   dateFormat="MMMM d, yyyy h:mm aa"
                   timeIntervals={15}
                   filterTime={filterPassedTime}
-                  minTime={new Date().setHours(10, 0)}
-                  maxTime={new Date().setHours(23, 45)}
+                  minTime={new Date().setHours(6, 30)}
+                  maxTime={new Date().setHours(16, 35)}
                 />
                 <DatePicker
                   className="m-auto lg:w-1/2 left-0"
@@ -207,8 +207,8 @@ const EquipmentDetails = ({ equipmentSlug }) => {
                   showTimeSelectOnly
                   timeIntervals={15}
                   filterTime={filterEndPassedTime}
-                  minTime={new Date().setHours(10, 0)}
-                  maxTime={new Date().setHours(23, 45)}
+                  minTime={new Date().setHours(6, 30)}
+                  maxTime={new Date().setHours(16, 35)}
                 />
               </div>
             </li>

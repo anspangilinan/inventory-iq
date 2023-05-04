@@ -2,6 +2,20 @@ import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import jsonFetcher from "@/lib/jsonFetcher";
 import Link from "next/link";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
+
+export async function getServerSideProps(context) {
+  const session = getSession();
+  const router = useRouter();
+
+  if (session.user.role == "admin") {
+    router.replace("/admin/reservations");
+  }
+  return {
+    props: {},
+  };
+}
 
 const HomePage = () => {
   const { data } = useSWR("/api/equipmentCategory", jsonFetcher);

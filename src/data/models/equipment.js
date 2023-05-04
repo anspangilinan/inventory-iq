@@ -23,6 +23,10 @@ const Equipment = new mongoose.Schema({
     ],
     maxlength: [360, "Name cannot be more than 60 characters"],
   },
+  availableItems: {
+    type: Number,
+    required: [true, "Please provide a value for available items."],
+  },
 });
 
 export default mongoose.models.Equipment ||

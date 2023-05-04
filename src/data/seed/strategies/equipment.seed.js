@@ -6,6 +6,10 @@ import netsJson from "./json/equipment/nets.json";
 import racketsJson from "./json/equipment/rackets.json";
 import technologyJson from "./json/equipment/technology.json";
 
+const randomNum = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
 const slugify = (str) =>
   str
     .toLowerCase()
@@ -71,6 +75,7 @@ class EquipmentSeeder {
           category,
           ...equipment,
           slug: slugify(equipment.name),
+          availableItems: randomNum(3, 18),
         });
       }
     }

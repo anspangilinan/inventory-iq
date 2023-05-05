@@ -62,7 +62,7 @@ const EquipmentReservations = ({ equipmentId }) => {
       setReservations(reservations);
     }
 
-    if ((session?.user?._id, equipmentId)) {
+    if (session?.user?._id && equipmentId) {
       fetchFromApi(session?.user._id, equipmentId);
     }
   }, [session?.user, equipmentId]);
@@ -106,9 +106,27 @@ const EquipmentDetails = ({ equipmentSlug }) => {
     }
   }, [data]);
 
+  useEffect(() => {
+    async function refetchEquipment() {
+      const queryString = new URLSearchParams({
+        startDate,
+        endDate,
+      }).toString();
+      const response = await GET({
+        url: `/api/equipment/${equipmentSlug}?${queryString}`,
+      });
+      setEquipment(response.data);
+    }
+    if (startDate && endDate) {
+      refetchEquipment();
+    }
+  }, [startDate, endDate]);
+
   const reserveHandler = async () => {
     if (quantity == 0) {
       toast.error("Please set a quantity");
+    } else if (quantity > equipment.availableItems) {
+      toast.error("Quantity exceeds maximum available items");
     } else if (startDate === null) {
       toast.error("Select a start date");
     } else if (endDate === null) {
@@ -143,10 +161,11 @@ const EquipmentDetails = ({ equipmentSlug }) => {
       }
     }
   };
+
   return (
     <>
-      <div className="w-full md:w-full relative flex-col md:flex justify-between items-center min-w-0 break-words bg-white p-6 shadow-xl rounded-lg">
-        <div className="w-full flex-col md:w-1/2 md:flex">
+      <div className="w-full xl:w-full relative flex-col md:flex justify-between items-center min-w-0 break-words bg-white p-6 shadow-xl rounded-lg">
+        <div className="w-full flex-col xl:w-1/2 xl:flex">
           <div className="flex items-center justify-between pt-4 w-full">
             <h3 className="text-3xl font-semibold text-blueGray-600">
               {equipment?.name}
@@ -158,6 +177,10 @@ const EquipmentDetails = ({ equipmentSlug }) => {
           </div>
           <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
             {equipment?.description}
+          </p>
+          <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
+            <span class="font-bold">Available items: </span>
+            {equipment?.availableItems}
           </p>
           <ul className="list-none mt-6 bg-blueGrey-200 rounded-lg">
             <li className="py-2">
@@ -182,7 +205,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
               </div>
             </li>
             <li className="py-2">
-              <div className="w-1/2 flex-row lg:flex items-center">
+              <div className="w-full flex-row items-center">
                 <DatePicker
                   className="m-auto"
                   showTimeSelect
@@ -198,7 +221,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
                   maxTime={new Date().setHours(16, 35)}
                 />
                 <DatePicker
-                  className="m-auto lg:w-1/2 left-0"
+                  className="m-auto w-left-0"
                   showTimeSelect
                   selected={endDate}
                   onChange={(date) => setEndDate(date)}
@@ -227,7 +250,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
             </li>
           </ul>
         </div>
-        <div className="w-full md:w-1/2 md:flex">
+        <div className="w-full xl:w-1/2 xl:flex">
           <EquipmentReservations equipmentId={equipment._id} />
         </div>
       </div>

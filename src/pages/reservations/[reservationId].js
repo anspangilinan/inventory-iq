@@ -49,7 +49,7 @@ const ReservationDetails = ({ reservationId }) => {
     reservation !== undefined && (
       <section className="relative">
         <div className="container mx-auto w-full lg:w-5/6">
-          <div className="relative flex flex-col min-w-0 break-words bg-white w-full md:w-3/5 mb-6 shadow-xl rounded-lg">
+          <div className="relative flex flex-col min-w-0 break-words bg-white w-full xs:w-3/5 mb-6 shadow-xl rounded-lg">
             <div className="px-6">
               <div className="flex flex-col md:flex-row items-center justify-between my-6">
                 <div>

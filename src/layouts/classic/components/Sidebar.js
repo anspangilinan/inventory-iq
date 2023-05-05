@@ -111,6 +111,27 @@ export default function Sidebar() {
             Manage Reservations
           </Link>
         </li>
+        <li className="items-center">
+          <Link
+            href="/admin/equipments"
+            className={
+              "text-xs uppercase py-3 font-bold block " +
+              (router.pathname == "/admin/equipments"
+                ? "text-red-500 hover:text-red-600"
+                : "text-blueGray-700 hover:text-blueGray-500")
+            }
+          >
+            <i
+              className={
+                "fas fa-newspaper mr-2 text-sm " +
+                (router.pathname == "/admin/equipments"
+                  ? "opacity-75"
+                  : "text-blueGray-300")
+              }
+            ></i>{" "}
+            Manage Equipments
+          </Link>
+        </li>
       </ul>
     </>
   );

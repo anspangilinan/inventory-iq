@@ -8,7 +8,7 @@ const SearchBar = () => {
   const [searchResult, setSearchResult] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [showResults, setShowResults] = useState(false);
-  const { data } = useSWR(`/api/equipment/`, jsonFetcher);
+  const { data } = useSWR(`/s/`, jsonFetcher);
 
   useEffect(() => {
     if (data) {

@@ -99,7 +99,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
     return startDate.getTime() < selectedDate.getTime();
   };
 
-  const { data } = useSWR(`/api/equipment/${equipmentSlug}`, jsonFetcher);
+  const { data } = useSWR(`/api/equipments/${equipmentSlug}`, jsonFetcher);
   useEffect(() => {
     if (data) {
       setEquipment(data.data);
@@ -113,7 +113,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
         endDate,
       }).toString();
       const response = await GET({
-        url: `/api/equipment/${equipmentSlug}?${queryString}`,
+        url: `/api/equipments/${equipmentSlug}?${queryString}`,
       });
       setEquipment(response.data);
     }

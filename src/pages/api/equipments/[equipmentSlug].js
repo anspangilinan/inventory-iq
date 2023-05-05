@@ -59,6 +59,20 @@ export default async function handler(req, res) {
         res.status(400).json({ success: false });
       }
       break;
+    case "PATCH":
+      try {
+        const { equipmentSlug } = req.query;
+        const equipment = await Equipment.updateOne(
+          { slug: equipmentSlug },
+          { ...req.body }
+        );
+        console.log({ equipmentSlug }, req.body);
+        res.status(201).json({ success: true, data: equipment });
+      } catch (error) {
+        console.log({ error });
+        res.status(400).json({ success: false });
+      }
+      break;
     default:
       res.status(400).json({ success: false });
       break;

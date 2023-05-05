@@ -116,15 +116,15 @@ export default function Sidebar() {
             href="/admin/equipments"
             className={
               "text-xs uppercase py-3 font-bold block " +
-              (router.pathname == "/admin/equipments"
+              (router.pathname.indexOf("/admin/equipments") !== -1
                 ? "text-red-500 hover:text-red-600"
                 : "text-blueGray-700 hover:text-blueGray-500")
             }
           >
             <i
               className={
-                "fas fa-newspaper mr-2 text-sm " +
-                (router.pathname == "/admin/equipments"
+                "fas fa-baseball-bat-ball mr-2 text-sm " +
+                (router.pathname.indexOf("/admin/equipments") !== -1
                   ? "opacity-75"
                   : "text-blueGray-300")
               }

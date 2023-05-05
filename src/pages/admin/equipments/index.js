@@ -38,7 +38,7 @@ const EquipmentsAdmin = () => {
       })
       .map((equipment) => {
         return {
-          rowLink: `/admin/equipments/${equipment._id}`,
+          rowLink: `/admin/equipments/${equipment.slug}/edit`,
           items: [
             equipment.name,
             equipment.category.name,

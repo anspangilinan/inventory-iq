@@ -12,7 +12,7 @@ const BASE = async ({ url, method, body }) => {
   const data = await response.json();
 
   if (!response.ok) {
-    console.log({ response });
+    console.log(url, { response });
     throw new Error(data.message || "Something went wrong!");
   }
 

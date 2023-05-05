@@ -25,10 +25,8 @@ export default async function handler(req, res) {
             path: "user",
             model: "User",
           });
-        console.log(reservations);
         res.status(200).json({ success: true, data: reservations });
       } catch (error) {
-        console.log({ error });
         res.status(400).json({ success: false });
       }
       break;
@@ -43,7 +41,6 @@ export default async function handler(req, res) {
           dateEnd: new Date(req.body.endDate),
         });
         const superAdmins = User.find({ role: "admin" });
-        console.log({ superAdmins });
         superAdmins.forEach(async (superAdmin) => {
           await Notification.create({
             recipient: superAdmin._id,

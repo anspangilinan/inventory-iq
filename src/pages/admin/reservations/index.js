@@ -29,7 +29,6 @@ const Reservations = () => {
         return status == selectedStatus || selectedStatus == "all";
       })
       .map((reservation) => {
-        console.log({ reservation });
         return {
           rowLink: `/admin/reservations/${reservation._id}`,
           items: [

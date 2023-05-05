@@ -32,13 +32,26 @@ const EditEquipment = ({ equipmentSlug }) => {
     }
   }, [equipment]);
 
+  const isInt = (value) => {
+    return (
+      !isNaN(value) &&
+      (function (x) {
+        return (x | 0) === x;
+      })(parseFloat(value))
+    );
+  };
   const onSubmit = async (data) => {
-    const response = await PATCH({
-      url: `/api/equipments/${equipment.slug}`,
-      body: JSON.stringify({ ...data }),
-    });
-    console.log({ response });
-    toast.success("Updated Equipment!");
+    if (!isInt(data.availableItems)) {
+      toast.error("Please provide a valid number.");
+    } else if (data.availableItems < 1) {
+      toast.error("Please provided a positive number.");
+    } else {
+      const response = await PATCH({
+        url: `/api/equipments/${equipment.slug}`,
+        body: JSON.stringify({ ...data }),
+      });
+      toast.success("Updated Equipment!");
+    }
   };
 
   return (

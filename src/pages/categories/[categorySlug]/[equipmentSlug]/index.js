@@ -179,7 +179,7 @@ const EquipmentDetails = ({ equipmentSlug }) => {
             {equipment?.description}
           </p>
           <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
-            <span class="font-bold">Available items: </span>
+            <span className="font-bold">Available items: </span>
             {equipment?.availableItems}
           </p>
           <ul className="list-none mt-6 bg-blueGrey-200 rounded-lg">

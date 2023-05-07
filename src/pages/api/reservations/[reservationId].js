@@ -55,11 +55,15 @@ export default async function handler(req, res) {
             path: "user",
             model: "User",
           });
-        await Notification.create({
-          recipient: reservation.user._id,
-          reservation: reservation._id,
-          message: `Your reservation has been ${reservation.status}`,
-        });
+        if (reservation.status == "rejected") {
+          await Reservation.deleteMany({ _id: reservationId });
+        } else {
+          await Notification.create({
+            recipient: reservation.user._id,
+            reservation: reservation._id,
+            message: `Your reservation has been ${reservation.status}`,
+          });
+        }
         res.status(200).json({ success: true, data: reservation });
       } catch (error) {
         res.status(400).json({ success: false });

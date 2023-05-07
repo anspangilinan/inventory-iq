@@ -4,6 +4,7 @@ import { formatDate } from "@/lib/utils/date";
 import getStatusDecoration from "@/lib/utils/style/getStatusDecoration";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import { toast } from "react-toastify";
@@ -17,18 +18,10 @@ export async function getServerSideProps(context) {
 }
 
 async function updateReservation({ reservationId, body }) {
-  return await PATCH({
-    url: `/api/reservations/${reservationId}`,
-    body: JSON.stringify(body),
-  });
-}
-
-const ReservationDetails = ({ reservationId }) => {
   const [reservation, setReservation] = useState(undefined);
-
-  const { data } = useSWR(`/api/reservations/${reservationId}`, jsonFetcher);
-
   const { data: session } = useSession();
+  const router = useRouter();
+  const { data } = useSWR(`/api/reservations/${reservationId}`, jsonFetcher);
   const isAdmin = session?.user.role == "admin";
 
   useEffect(() => {
@@ -36,6 +29,12 @@ const ReservationDetails = ({ reservationId }) => {
       setReservation(data.data);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (reservation == undefined) {
+      router.replace("/admin/reservations");
+    }
+  }, [reservation]);
 
   const statusChange = async (status) => {
     await updateReservation({
@@ -158,6 +157,6 @@ const ReservationDetails = ({ reservationId }) => {
       </section>
     )
   );
-};
+}
 
 export default ReservationDetails;

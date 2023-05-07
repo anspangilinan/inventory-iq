@@ -18,6 +18,13 @@ export async function getServerSideProps(context) {
 }
 
 async function updateReservation({ reservationId, body }) {
+  return await PATCH({
+    url: `/api/reservations/${reservationId}`,
+    body: JSON.stringify(body),
+  });
+}
+
+const ReservationDetails = ({ reservationId }) => {
   const [reservation, setReservation] = useState(undefined);
   const { data: session } = useSession();
   const router = useRouter();
@@ -26,19 +33,19 @@ async function updateReservation({ reservationId, body }) {
 
   useEffect(() => {
     if (data) {
-      setReservation(data.data);
+      setReservation(data.data || null);
     }
   }, [data]);
 
   useEffect(() => {
-    if (reservation == undefined) {
+    if (reservation === null) {
       router.replace("/admin/reservations");
     }
   }, [reservation]);
 
   const statusChange = async (status) => {
     await updateReservation({
-      reservationId: reservation._id,
+      reservationId: reservation?._id,
       body: { status },
     });
     toast.success(`Reservation ${status}`);
@@ -54,7 +61,7 @@ async function updateReservation({ reservationId, body }) {
                 <div>
                   <Calendar
                     tileDisabled={() => true}
-                    value={[reservation.dateStart, reservation.dateEnd]}
+                    value={[reservation?.dateStart, reservation?.dateEnd]}
                     calendarType={"US"}
                   />
                 </div>
@@ -67,46 +74,46 @@ async function updateReservation({ reservationId, body }) {
                       <li>
                         <span
                           className={`uppercase bold ${getStatusDecoration(
-                            reservation.status
+                            reservation?.status
                           )}`}
                         >
-                          {reservation.status}
+                          {reservation?.status}
                         </span>
                       </li>
                       <li>
                         <span className="text-gray-400">Equipment:</span>{" "}
                         <Link
-                          href={`/categories/${reservation.equipment.category.slug}/${reservation.equipment.slug}`}
+                          href={`/categories/${reservation?.equipment.category.slug}/${reservation?.equipment.slug}`}
                           className="hover:underline hover:text-orange-500"
                         >
-                          {reservation.equipment.name}
+                          {reservation?.equipment.name}
                         </Link>
                       </li>
                       <li>
                         <span className="text-gray-400">Category:</span>{" "}
                         <Link
-                          href={`/categories/${reservation.equipment.category.slug}`}
+                          href={`/categories/${reservation?.equipment.category.slug}`}
                           className="hover:underline hover:text-orange-500"
                         >
-                          {reservation.equipment.category.name}
+                          {reservation?.equipment.category.name}
                         </Link>
                       </li>
                       <li>
                         <span className="text-gray-400">Quantity:</span>{" "}
-                        {reservation.quantity}
+                        {reservation?.quantity}
                       </li>
                       <li>
                         <span className="text-gray-400">Date:</span>{" "}
                         <span className="text-amber-600">
-                          {formatDate(reservation.dateStart, "dateOnly")}
+                          {formatDate(reservation?.dateStart, "dateOnly")}
                         </span>
                       </li>
                       <li>
                         <span className="text-gray-400">Period:</span>{" "}
                         <span className="text-amber-600">
-                          {formatDate(reservation.dateStart, "time")}
+                          {formatDate(reservation?.dateStart, "time")}
                           {" - "}
-                          {formatDate(reservation.dateEnd, "time")}
+                          {formatDate(reservation?.dateEnd, "time")}
                         </span>
                       </li>
                     </ul>
@@ -119,21 +126,21 @@ async function updateReservation({ reservationId, body }) {
                     <ul>
                       <li>
                         <span className="text-gray-400">Name:</span>{" "}
-                        {`${reservation.user.firstName}  ${reservation.user.lastName}`}
+                        {`${reservation?.user.firstName}  ${reservation?.user.lastName}`}
                       </li>
                       <li>
                         <span className="text-gray-400">Email:</span>{" "}
-                        {reservation.user.email}
+                        {reservation?.user.email}
                       </li>
-                      {reservation.user.grade && (
+                      {reservation?.user.grade && (
                         <li className="mb-2 text-blueGray-600">
                           <span className="text-gray-400">Grade:</span>{" "}
-                          {`${reservation.user.grade}  ${reservation.user.section}`}
+                          {`${reservation?.user.grade}  ${reservation?.user.section}`}
                         </li>
                       )}
                     </ul>
                   </div>
-                  {isAdmin && reservation.status == "pending" && (
+                  {isAdmin && reservation?.status == "pending" && (
                     <div className="mt-8 mb-2 text-blueGray-600 flex items-center">
                       <button
                         className="w-3/4 bg-green-200 text-green-800 active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -157,6 +164,6 @@ async function updateReservation({ reservationId, body }) {
       </section>
     )
   );
-}
+};
 
 export default ReservationDetails;

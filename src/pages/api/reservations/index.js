@@ -31,29 +31,6 @@ export default async function handler(req, res) {
         res.status(400).json({ success: false });
       }
       break;
-    case "POST":
-      try {
-        const { userId } = req.query;
-        const reservation = await Reservation.create({
-          equipment: req.body.equipmentId,
-          user: userId,
-          quantity: req.body.quantity,
-          dateStart: new Date(req.body.startDate),
-          dateEnd: new Date(req.body.endDate),
-        });
-        const superAdmins = User.find({ role: "admin" });
-        superAdmins.forEach(async (superAdmin) => {
-          await Notification.create({
-            recipient: superAdmin._id,
-            reservation: reservation._id,
-            message: `A new reservation has been requested`,
-          });
-        });
-        res.status(201).json({ success: true, data: reservation });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
     default:
       res.status(400).json({ success: false });
       break;

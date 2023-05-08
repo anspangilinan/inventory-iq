@@ -12,10 +12,7 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const reservations = await Reservation.find({
-          user: { $ne: null },
-          equipment: { $ne: null },
-        })
+        const reservations = await Reservation.find()
           .populate({
             path: "equipment",
             model: "Equipment",
@@ -29,6 +26,7 @@ export default async function handler(req, res) {
             model: "User",
           });
         res.status(200).json({ success: true, data: reservations });
+        console.log({ reservations });
       } catch (error) {
         res.status(400).json({ success: false });
       }

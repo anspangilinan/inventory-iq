@@ -24,11 +24,13 @@ const Reservations = () => {
   }, [session?.user]);
 
   useEffect(() => {
+    console.log({ reservations });
     const tempReservations = reservations
       .filter(({ status }) => {
         return status == selectedStatus || selectedStatus == "all";
       })
       .map((reservation) => {
+        console.log({ reservation });
         return {
           rowLink: `/admin/reservations/${reservation._id}`,
           items: [

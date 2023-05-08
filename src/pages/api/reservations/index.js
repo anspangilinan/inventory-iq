@@ -12,7 +12,10 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const reservations = await Reservation.find({})
+        const reservations = await Reservation.find({
+          user: { $ne: null },
+          equipment: { $ne: null },
+        })
           .populate({
             path: "equipment",
             model: "Equipment",
